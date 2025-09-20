@@ -17,3 +17,18 @@ This project demonstrates how to design a scalable dashboard with reusable UI co
 - 👤 **Profile & User Pages** – Example pages with reusable ShadCN components.  
 
 ---
+
+## 🛠️ Built With
+
+- **[Next.js](https://nextjs.org/)** – React framework for production apps. 
+- **[React](https://react.dev/)** – UI library.
+- **[Tailwind CSS](https://tailwindcss.com/)** – Utility-first CSS framework.
+- **[ShadCN UI](https://ui.shadcn.com/)** – Radix UI + Tailwind component library.
+- **[Recharts](https://recharts.org/)** – Data visualization library.
+- **[TanStack Table](https://tanstack.com/table)** – Advanced data tables.
+- **[react-hook-form](https://react-hook-form.com/)** – Form handling.
+- **[Zod](https://zod.dev/)** – Schema validation.
+
+---
+
+## Project Preview
