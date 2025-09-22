@@ -14,14 +14,18 @@ import { Button } from './ui/button';
 
 import Link from "next/link"
 import { useTheme } from 'next-themes';
+import { SidebarTrigger, useSidebar } from './ui/sidebar';
 
 const Navbar = () => {
     const { setTheme } = useTheme()
+    const { toggleSidebar } = useSidebar()
 
     return (
         <nav className="p-4 flex items-center justify-between">
             {/* Left */}
-            collapseButton
+            <SidebarTrigger />
+
+            {/*  <Button variant="outline" onClick={toggleSidebar} >Custom Button</Button> */}
             {/* Left */}
 
             {/* Right */}
