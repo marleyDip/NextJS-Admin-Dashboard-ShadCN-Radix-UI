@@ -46,7 +46,7 @@ const AppPieChart = () => {
 
     return (
         <div className="">
-            <h1 className="text-lg font-medium mb-6">Browser Usage</h1>
+            <h1 className="text-lg font-medium mb-4">Browser Usage</h1>
 
             <ChartContainer
                 config={chartConfig}
@@ -97,11 +97,11 @@ const AppPieChart = () => {
                         />
                     </Pie>
 
-                    <ChartLegend content={<ChartLegendContent />} />
+                    <ChartLegend content={<ChartLegendContent className="grid grid-cols-3 gap-2" />} />
                 </PieChart>
             </ChartContainer>
 
-            <div className="mt-8 flex flex-col gap-2 items-center">
+            <div className="mt-6 flex flex-col gap-2 items-center">
                 <div className="flex items-center gap-2 leading-none font-medium">
                     Trending up by 5.2% this month <TrendingUp className="h-4 w-4 text-green-500" />
                 </div>
