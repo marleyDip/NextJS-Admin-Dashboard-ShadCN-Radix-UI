@@ -46,11 +46,11 @@ const AppPieChart = () => {
 
     return (
         <div className="">
-            <h1 className="text-lg font-medium mb-4">Browser Usage</h1>
+            <h1 className="text-lg font-medium mb-6">Browser Usage</h1>
 
             <ChartContainer
                 config={chartConfig}
-                className="mx-auto aspect-square max-h-[250px]"
+                className="mx-auto aspect-square max-h-[350px]"
             >
                 <PieChart>
                     <ChartTooltip
@@ -97,7 +97,7 @@ const AppPieChart = () => {
                         />
                     </Pie>
 
-                    <ChartLegend content={<ChartLegendContent className="grid grid-cols-3 gap-2" />} />
+                    <ChartLegend content={<ChartLegendContent className="grid grid-cols-3 gap-2 mt-2" />} />
                 </PieChart>
             </ChartContainer>
 
