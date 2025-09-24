@@ -33,24 +33,32 @@ import { useForm } from "react-hook-form";
 const formSchema = z.object({
     username: z
         .string()
-        .min(2, { message: "Username must be at least 2 characters!" })
-        .max(50),
+        .min(2, { message: "Username must be at least 2 characters long." })
+        .max(50, { message: "Username must not exceed 50 characters." }),
 
     email: z
         .string()
-        .email({ message: "Invalid email address!" }),
+        .email({ message: "Please enter a valid email address." }),
 
     phone: z
         .string()
-        .min(11)
-        .max(20),
+        .regex(
+            /^\+?[\d\s-]+$/,
+            { message: "Phone number can contain digits, spaces, dashes, and optionally start with +" }
+        )
+        .min(10, { message: "Phone number must be at least 10 characters." })
+        .max(20, { message: "Phone number must not exceed 20 characters." }),
+
 
     location: z
         .string()
-        .min(2),
+        .min(2, { message: "Location must be at least 2 characters long." }),
 
-    role: z.enum(["admin", "user"])
+    role: z.enum(["admin", "user"], {
+        message: "Role must be either 'admin' or 'user'.",
+    }),
 })
+
 
 const EditUser = () => {
 
@@ -178,7 +186,10 @@ const EditUser = () => {
                                         <FormLabel>Role</FormLabel>
 
                                         <FormControl>
-                                            <Select>
+                                            <Select
+                                                value={field.value || ""} // Current Value from RHF
+                                                onValueChange={field.onChange} // Update RHF state
+                                            >
 
                                                 <SelectTrigger className="w-[180px]">
                                                     <SelectValue placeholder="Role" />
@@ -188,6 +199,7 @@ const EditUser = () => {
                                                     <SelectItem value="admin">
                                                         Admin
                                                     </SelectItem>
+
                                                     <SelectItem value="user">
                                                         User
                                                     </SelectItem>
@@ -219,6 +231,35 @@ export default EditUser;
        => An enum is a user-defined data type that consists of a fixed set of named constants, or "enumerators," representing related values. 
        
        => This makes code more readable by replacing numerical codes with meaningful names and helps prevent errors by restricting a variable to only those specific values.  
+*/
+
+/*  /^\+?\d[\d\s-]{9,19}$/
+
+        Breaking it down:
+
+        ^ → start of string
+
+        \+? → optional + at the start
+
+        \d → first digit (mandatory)
+
+        [\d\s-]{9,19} → the next 9–19 characters, each can be:
+
+        \d → a digit
+
+        \s → a space
+
+        - → a dash
+
+        $ → end of string
+
+    So the total length of the phone number (after the optional +) will be 10–20 characters, because:
+
+    \d → 1 character
+
+    [\d\s-]{9,19} → 9 to 19 characters
+
+    1 + 9 = 10 (minimum), 1 + 19 = 20 (maximum) 
 */
 
 /* by default React Hook Form validates fields on different “modes”:
