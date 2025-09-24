@@ -15,10 +15,7 @@ import {
     DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Button } from './ui/button';
-import {
-    SidebarTrigger,
-    useSidebar,
-} from './ui/sidebar';
+import { SidebarTrigger } from './ui/sidebar';
 
 import Link from "next/link"
 import { useTheme } from 'next-themes';

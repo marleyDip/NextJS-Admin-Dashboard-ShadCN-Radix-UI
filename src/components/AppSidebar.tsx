@@ -1,4 +1,4 @@
-import { Home, Inbox, Calendar, Search, Settings, User2, ChevronUp, Plus, Projector, ChevronDown, ChevronRight, WalletCards, User } from "lucide-react";
+import { Home, Inbox, Search, Settings, User2, ChevronUp, Plus, Projector, ChevronDown, ChevronRight, WalletCards, User } from "lucide-react";
 
 import {
     Sidebar,
