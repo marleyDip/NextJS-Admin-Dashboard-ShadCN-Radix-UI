@@ -10,9 +10,9 @@ This project demonstrates how to design a scalable dashboard with reusable UI co
 - 📊 **Dashboard Layout** – Responsive grid-based layout.  
 - 🧭 **Navbar & Sidebar** – Collapsible sidebar with nested menus.  
 - 🌙 **Dark Mode Support** – Custom theming with Tailwind + ShadCN.  
-- 🎨 **UI Components** – Dropdowns, sidebar, charts, avatar, modals (sheets), collapsible, button, tooltips, skeleton, card, breadcrumbs, scroll areas, checkboxes, progress bars, forms, and more.  
+- 🎨 **UI Components** – Dropdowns, Sidebar, Charts, Avatar, Modals (sheets), Collapsible, Button, Tooltips, Skeleton, Card, Breadcrumbs, Scroll Areas, Checkboxes, Calendar, Popover,  Sheet Component, progress bars, forms, and more.  
 - ✅ **Form Handling** – Validation with `react-hook-form` and `zod`.  
-- 📈 **Charts & Data Visualization** – Area, Pie, and Bar Charts using Recharts.  
+- 📈 **Charts & Data Visualization** – Area, Pie, Line, and Bar Charts using Recharts.  
 - 📑 **Data Tables** – Built with Tanstack React Table (sorting, pagination, custom headers, actions, row selection).  
 - 👤 **Profile & User Pages** – Example pages with reusable ShadCN components.  
 
