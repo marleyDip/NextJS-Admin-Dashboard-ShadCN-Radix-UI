@@ -1,10 +1,26 @@
 import CardList from "@/components/CardList";
+import EditUser from "@/components/EditUser";
 import { Badge } from "@/components/ui/badge";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator
+} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
+import {
+    HoverCard,
+    HoverCardContent,
+    HoverCardTrigger
+} from "@/components/ui/hover-card";
 import { Progress } from "@/components/ui/progress";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import {
+    Sheet,
+    SheetTrigger
+} from "@/components/ui/sheet";
+
 import { BadgeCheck, Candy, Citrus, Shield } from "lucide-react";
 
 
@@ -131,20 +147,7 @@ const SingleUsersPage = () => {
                                     <Button>Edit User</Button>
                                 </SheetTrigger>
 
-                                <SheetContent>
-                                    <SheetHeader>
-
-                                        <SheetTitle>
-                                            Are you absolutely sure?
-                                        </SheetTitle>
-
-                                        <SheetDescription>
-                                            This action cannot be undone. This will permanently delete your account
-                                            and remove your data from our servers.
-                                        </SheetDescription>
-
-                                    </SheetHeader>
-                                </SheetContent>
+                                <EditUser />
                             </Sheet>
                         </div>
 
