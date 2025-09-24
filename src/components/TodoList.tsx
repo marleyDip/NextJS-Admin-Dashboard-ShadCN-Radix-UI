@@ -149,3 +149,13 @@ const TodoList = () => {
 }
 
 export default TodoList;
+
+/* import { format } from "date-fns"
+
+    const date = new Date(2025, 0, 23) // Jan 23, 2025
+
+    console.log(format(date, "P"))    // 01/23/2025
+    console.log(format(date, "PP"))   // Jan 23, 2025
+    console.log(format(date, "PPP"))  // January 23rd, 2025
+    console.log(format(date, "PPPP")) // Thursday, January 23rd, 2025
+ */
