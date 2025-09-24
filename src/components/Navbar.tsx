@@ -1,7 +1,11 @@
 "use client"
 
 import { LogOut, Moon, Settings, Sun, User } from 'lucide-react';
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import {
+    Avatar,
+    AvatarFallback,
+    AvatarImage,
+} from "./ui/avatar";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -9,16 +13,19 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "./ui/dropdown-menu"
+} from "./ui/dropdown-menu";
 import { Button } from './ui/button';
+import {
+    SidebarTrigger,
+    useSidebar,
+} from './ui/sidebar';
 
 import Link from "next/link"
 import { useTheme } from 'next-themes';
-import { SidebarTrigger, useSidebar } from './ui/sidebar';
 
 const Navbar = () => {
     const { setTheme } = useTheme()
-    const { toggleSidebar } = useSidebar()
+    //const { toggleSidebar } = useSidebar()
 
     return (
         <nav className="p-4 flex items-center justify-between sticky top-0 bg-background z-10">
@@ -64,8 +71,13 @@ const Navbar = () => {
                 <DropdownMenu>
                     <DropdownMenuTrigger>
                         <Avatar>
-                            <AvatarImage src="https://github.com/shadcn.png" alt='user-icon' />
-                            <AvatarFallback>user</AvatarFallback>
+                            <AvatarImage
+                                src="https://github.com/shadcn.png"
+                                alt='user-icon'
+                            />
+                            <AvatarFallback>
+                                user
+                            </AvatarFallback>
                         </Avatar>
                     </DropdownMenuTrigger>
 
@@ -76,9 +88,11 @@ const Navbar = () => {
 
                         <DropdownMenuSeparator />
 
-                        <DropdownMenuItem>
-                            <User className="h-[1.2rem] w-[1.2rem] mr-2" />
-                            Profile
+                        <DropdownMenuItem asChild>
+                            <Link href="/users/dip" className="flex items-center">
+                                <User className="h-[1.2rem] w-[1.2rem] mr-2" />
+                                Profile
+                            </Link>
                         </DropdownMenuItem>
 
                         <DropdownMenuItem>

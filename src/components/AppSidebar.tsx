@@ -1,11 +1,34 @@
-import { Home, Inbox, Calendar, Search, Settings, User2, ChevronUp, Plus, Projector, ChevronDown, ChevronRight } from "lucide-react"
-import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupAction, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuBadge, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem, SidebarSeparator } from "./ui/sidebar"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu"
+import { Home, Inbox, Calendar, Search, Settings, User2, ChevronUp, Plus, Projector, ChevronDown, ChevronRight, WalletCards, User } from "lucide-react";
 
-//  import shadcn dropdown, not radix directly
-//import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-//import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarGroup,
+    SidebarGroupAction,
+    SidebarGroupContent,
+    SidebarGroupLabel,
+    SidebarHeader,
+    SidebarMenu,
+    SidebarMenuBadge,
+    SidebarMenuButton,
+    SidebarMenuItem,
+    SidebarMenuSub,
+    SidebarMenuSubButton,
+    SidebarMenuSubItem,
+    SidebarSeparator,
+} from "./ui/sidebar";
+import {
+    Collapsible,
+    CollapsibleContent,
+    CollapsibleTrigger,
+} from "./ui/collapsible";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "./ui/dropdown-menu"
 
 import Link from "next/link"
 import Image from "next/image"
@@ -18,14 +41,19 @@ const items = [
         icon: Home,
     },
     {
+        title: "Payments",
+        url: "/payments",
+        icon: WalletCards,
+    },
+    {
+        title: "Account",
+        url: "/users/dip",
+        icon: User,
+    },
+    {
         title: "Inbox",
         url: "#",
         icon: Inbox,
-    },
-    {
-        title: "Calendar",
-        url: "#",
-        icon: Calendar,
     },
     {
         title: "Search",
@@ -80,9 +108,9 @@ const AppSidebar = () => {
                                         </Link>
                                     </SidebarMenuButton>
 
-                                    {item.title === "Inbox" && (
+                                    {item.title === "Payments" && (
                                         <SidebarMenuBadge>
-                                            24
+                                            33
                                         </SidebarMenuBadge>
                                     )}
                                 </SidebarMenuItem>
@@ -320,9 +348,19 @@ const AppSidebar = () => {
                             <DropdownMenuContent
                                 align="end" side="top" className="w-full"
                             >
-                                <DropdownMenuItem>Account</DropdownMenuItem>
-                                <DropdownMenuItem>Billing</DropdownMenuItem>
-                                <DropdownMenuItem>Sign out</DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link href="/users/dip">
+                                        Account
+                                    </Link>
+                                </DropdownMenuItem>
+
+                                <DropdownMenuItem>
+                                    Billing
+                                </DropdownMenuItem>
+
+                                <DropdownMenuItem>
+                                    Sign out
+                                </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </SidebarMenuItem>
