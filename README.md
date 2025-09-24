@@ -33,9 +33,9 @@ This project demonstrates how to design a scalable dashboard with reusable UI co
 
 ## Project Preview
 
-<img width="1920" height="1080" alt="dashboard half up" src="https://github.com/user-attachments/assets/b94b0ffe-e4b9-48b3-a16f-b60dfc301987" />
-
 <img width="1920" height="1080" alt="dashboard half down" src="https://github.com/user-attachments/assets/1a489196-676f-4322-ae7a-d39fb26a5f84" />
+
+<img width="1920" height="1080" alt="dashboard half up" src="https://github.com/user-attachments/assets/b94b0ffe-e4b9-48b3-a16f-b60dfc301987" />
 
 <img width="1920" height="1478" alt="Dashboard" src="https://github.com/user-attachments/assets/019c31b9-9ac4-4114-96ac-c1892c04f96e" />
 
