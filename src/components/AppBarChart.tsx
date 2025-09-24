@@ -26,10 +26,18 @@ const chartConfig = {
 const AppBarChart = () => {
     return (
         <div className="">
-            <h1 className="text-lg font-medium mb-6">Total Revenue</h1>
+            <h1 className="text-lg font-medium mb-8">
+                Total Revenue
+            </h1>
 
-            <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-                <BarChart accessibilityLayer data={chartData}>
+            <ChartContainer
+                config={chartConfig}
+                className="min-h-[300px] w-full"
+            >
+                <BarChart
+                    accessibilityLayer
+                    data={chartData}
+                >
 
                     <CartesianGrid vertical={false} />
 
@@ -49,10 +57,22 @@ const AppBarChart = () => {
 
                     <ChartTooltip content={<ChartTooltipContent />} />
 
-                    <ChartLegend content={<ChartLegendContent />} />
+                    <ChartLegend
+                        content={<ChartLegendContent />}
+                        className="mt-4"
+                    />
 
-                    <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-                    <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
+                    <Bar
+                        dataKey="desktop"
+                        fill="var(--color-desktop)"
+                        radius={4}
+                    />
+
+                    <Bar
+                        dataKey="mobile"
+                        fill="var(--color-mobile)"
+                        radius={4}
+                    />
                 </BarChart>
             </ChartContainer>
         </div>

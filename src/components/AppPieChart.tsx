@@ -1,9 +1,21 @@
 "use client"
 
-import { useMemo } from "react"
-import { ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from "./ui/chart"
-import { Label, Pie, PieChart } from "recharts"
+import { useMemo } from "react";
 import { TrendingUp } from "lucide-react"
+
+import {
+    ChartConfig,
+    ChartContainer,
+    ChartLegend,
+    ChartLegendContent,
+    ChartTooltip,
+    ChartTooltipContent
+} from "./ui/chart"
+import {
+    Label,
+    Pie,
+    PieChart
+} from "recharts"
 
 const chartData = [
     { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
@@ -46,11 +58,13 @@ const AppPieChart = () => {
 
     return (
         <div className="">
-            <h1 className="text-lg font-medium mb-6">Browser Usage</h1>
+            <h1 className="text-lg font-medium mb-6">
+                Browser Usage
+            </h1>
 
             <ChartContainer
                 config={chartConfig}
-                className="mx-auto aspect-square max-h-[350px]"
+                className="mx-auto aspect-square max-h-[300px]"
             >
                 <PieChart>
                     <ChartTooltip
@@ -97,13 +111,17 @@ const AppPieChart = () => {
                         />
                     </Pie>
 
-                    <ChartLegend content={<ChartLegendContent className="grid grid-cols-3 gap-2 mt-2" />} />
+                    <ChartLegend
+                        content={<ChartLegendContent />}
+                        className="grid grid-cols-3 gap-2 mt-2"
+                    />
                 </PieChart>
             </ChartContainer>
 
             <div className="mt-6 flex flex-col gap-2 items-center">
                 <div className="flex items-center gap-2 leading-none font-medium">
-                    Trending up by 5.2% this month <TrendingUp className="h-4 w-4 text-green-500" />
+                    Trending up by 5.2% this month
+                    <TrendingUp className="h-4 w-4 text-green-500" />
                 </div>
 
                 <div className="text-muted-foreground leading-none">
@@ -115,3 +133,4 @@ const AppPieChart = () => {
 }
 
 export default AppPieChart;
+
