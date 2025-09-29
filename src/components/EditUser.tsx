@@ -43,7 +43,7 @@ const formSchema = z.object({
     phone: z
         .string()
         .regex(
-            /^\+?[\d\s-]+$/,
+            /^\+?\d{1,2}[\d\s-]+$/,
             { message: "Phone number can contain digits, spaces, dashes, and optionally start with +" }
         )
         .min(10, { message: "Phone number must be at least 10 characters." })
