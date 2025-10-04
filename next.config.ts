@@ -1,15 +1,20 @@
+import path from "path";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "images.pexels.com"
-      }
-    ]
-  }
+        hostname: "images.pexels.com",
+      },
+    ],
+  },
+
+  // ✅ Automatically detect project root (cross-platform)
+  turbopack: {
+    root: path.resolve(__dirname),
+  },
 };
 
 export default nextConfig;
