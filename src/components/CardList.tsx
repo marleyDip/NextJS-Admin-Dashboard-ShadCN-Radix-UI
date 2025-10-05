@@ -189,8 +189,26 @@ const CardList = ({ title }: { title: string }) => {
                   </Badge>
                 </CardContent>
 
-                <CardFooter className="p-0 text-sm font-medium">
-                  ${item.count / 1000}K
+                <CardFooter className="p-0 text-sm font-medium flex items-center">
+                  {/* Light mode image */}
+                  <Image
+                    src="/taka.png"
+                    alt="BD Taka Icon"
+                    width={16}
+                    height={16}
+                    className="dark:hidden"
+                  />
+
+                  {/* Dark mode image */}
+                  <Image
+                    src="/taka-white.png"
+                    alt="BD Taka Icon (white)"
+                    width={16}
+                    height={16}
+                    className="hidden dark:block"
+                  />
+
+                  <span>{item.count / 1000}K</span>
                 </CardFooter>
               </Card>
             ))}

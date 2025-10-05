@@ -1,28 +1,28 @@
-"use client"
+"use client";
 
 import {
-    SheetContent,
-    SheetDescription,
-    SheetHeader,
-    SheetTitle
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
 } from "@/components/ui/sheet";
 import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
 } from "./ui/form";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "./ui/select";
 
 import { z } from "zod";
@@ -31,206 +31,175 @@ import { useForm } from "react-hook-form";
 
 //Define Zod schema
 const formSchema = z.object({
-    username: z
-        .string()
-        .min(2, { message: "Username must be at least 2 characters long." })
-        .max(50, { message: "Username must not exceed 50 characters." }),
+  fullname: z
+    .string()
+    .min(2, { message: "Full Name must be at least 2 characters long." })
+    .max(50, { message: "Full Name must not exceed 50 characters." }),
 
-    email: z
-        .string()
-        .email({ message: "Please enter a valid email address." }),
+  email: z.string().email({ message: "Please enter a valid email address." }),
 
-    phone: z
-        .string()
-        .regex(
-            /^\+?\d{1,2}[\d\s-]+$/,
-            { message: "Phone number can contain digits, spaces, dashes, and optionally start with +" }
-        )
-        .min(10, { message: "Phone number must be at least 10 characters." })
-        .max(20, { message: "Phone number must not exceed 20 characters." }),
+  phone: z
+    .string()
+    .regex(/^\+?\d{1,2}[\d\s-]+$/, {
+      message:
+        "Phone number can contain digits, spaces, dashes, and optionally start with +",
+    })
+    .min(10, { message: "Phone number must be at least 10 characters." })
+    .max(20, { message: "Phone number must not exceed 20 characters." }),
 
+  address: z
+    .string()
+    .min(2, { message: "Address must be at least 2 characters long." }),
 
-    location: z
-        .string()
-        .min(2, { message: "Location must be at least 2 characters long." }),
-
-    role: z.enum(["admin", "user"], {
-        message: "Role must be either 'admin' or 'user'.",
-    }),
-})
-
+  city: z
+    .string()
+    .min(2, { message: "City must be at least 2 characters long." }),
+});
 
 const EditUser = () => {
+  // 1. Define form. Initialize React Hook Form with Zod. useForm with validation ONLY on submit
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      fullname: "Dip Akand",
+      email: "dip.akand9899@gmail.com",
+      phone: "+880 1689 190142",
+      address: "Dhanmondi 32",
+      city: "Dhaka",
+    },
+    //mode: "onSubmit", // validate only when submitted
+  });
 
-    // 1. Define form. Initialize React Hook Form with Zod. useForm with validation ONLY on submit
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-            username: "Dip Akand",
-            email: "dip.akand9899@gmail.com",
-            phone: "+880 1689 190142",
-            location: "Dhaka, BD",
-            role: "admin",
-        },
-        //mode: "onSubmit", // validate only when submitted
-    })
+  // 2. Define a submit handler.
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    console.log("Submitted values: ", values);
+  }
 
-    // 2. Define a submit handler.
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log("Submitted values: ", values)
-    }
+  return (
+    <SheetContent>
+      <SheetHeader>
+        <SheetTitle className="mb-4">Edit User</SheetTitle>
 
-    return (
-        <SheetContent>
-            <SheetHeader>
+        <SheetDescription asChild>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              <FormField
+                control={form.control}
+                name="fullname"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Full Name</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormDescription>Enter user full name.</FormDescription>
+                    <FormMessage /> {/* Shows only after submit */}
+                  </FormItem>
+                )}
+              />
 
-                <SheetTitle className="mb-4">
-                    Edit User
-                </SheetTitle>
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
 
-                <SheetDescription asChild>
-                    <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                            <FormField
-                                control={form.control}
-                                name="username"
-                                render={({ field }) => (
-                                    <FormItem>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
 
-                                        <FormLabel>Username</FormLabel>
+                    <FormDescription>
+                      Only admin can see your email.
+                    </FormDescription>
 
-                                        <FormControl>
-                                            <Input placeholder="Enter Your UserName" {...field} />
-                                        </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-                                        <FormDescription>
-                                            This is your public username.
-                                        </FormDescription>
+              <FormField
+                control={form.control}
+                name="phone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Phone</FormLabel>
 
-                                        <FormMessage /> {/* Shows only after submit */}
-                                    </FormItem>
-                                )}
-                            />
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
 
-                            <FormField
-                                control={form.control}
-                                name="email"
-                                render={({ field }) => (
-                                    <FormItem>
+                    <FormDescription>
+                      Only admin can see your phone number (optional).
+                    </FormDescription>
 
-                                        <FormLabel>Email</FormLabel>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-                                        <FormControl>
-                                            <Input placeholder="Enter Your Email" {...field} />
-                                        </FormControl>
+              <FormField
+                control={form.control}
+                name="address"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Address</FormLabel>
 
-                                        <FormDescription>
-                                            Only admin can see your email.
-                                        </FormDescription>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
 
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
+                    <FormDescription>
+                      Enter user address (optional).
+                    </FormDescription>
 
-                            <FormField
-                                control={form.control}
-                                name="phone"
-                                render={({ field }) => (
-                                    <FormItem>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-                                        <FormLabel>Phone</FormLabel>
+              <FormField
+                control={form.control}
+                name="city"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>City</FormLabel>
 
-                                        <FormControl>
-                                            <Input placeholder="Enter Your Phone" {...field} />
-                                        </FormControl>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
 
-                                        <FormDescription>
-                                            Only admin can see your phone number.
-                                        </FormDescription>
+                    <FormDescription>
+                      Enter user city (optional).
+                    </FormDescription>
 
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-                            <FormField
-                                control={form.control}
-                                name="location"
-                                render={({ field }) => (
-                                    <FormItem>
-
-                                        <FormLabel>Location</FormLabel>
-
-                                        <FormControl>
-                                            <Input placeholder="Enter Your Location" {...field} />
-                                        </FormControl>
-
-                                        <FormDescription>
-                                            This is your public location.
-                                        </FormDescription>
-
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-
-                            <FormField
-                                control={form.control}
-                                name="role"
-                                render={({ field }) => (
-                                    <FormItem>
-
-                                        <FormLabel>Role</FormLabel>
-
-                                        <FormControl>
-                                            <Select
-                                                value={field.value || ""} // Current Value from RHF
-                                                onValueChange={field.onChange} // Update RHF state
-                                            >
-
-                                                <SelectTrigger className="w-[180px]">
-                                                    <SelectValue placeholder="Role" />
-                                                </SelectTrigger>
-
-                                                <SelectContent>
-                                                    <SelectItem value="admin">
-                                                        Admin
-                                                    </SelectItem>
-
-                                                    <SelectItem value="user">
-                                                        User
-                                                    </SelectItem>
-                                                </SelectContent>
-                                            </Select>
-                                        </FormControl>
-
-                                        <FormDescription>
-                                            Only verified users can be admin.
-                                        </FormDescription>
-
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <Button className="hover:translate-x-1 duration-200" type="submit">Submit</Button>
-                        </form>
-                    </Form>
-                </SheetDescription>
-
-            </SheetHeader>
-        </SheetContent>
-    )
-}
+              <Button
+                className="hover:translate-x-1 duration-200"
+                type="submit"
+              >
+                Submit
+              </Button>
+            </form>
+          </Form>
+        </SheetDescription>
+      </SheetHeader>
+    </SheetContent>
+  );
+};
 
 export default EditUser;
 
-/* The full form of enum is enumeration or enumerated type. 
-       => An enum is a user-defined data type that consists of a fixed set of named constants, or "enumerators," representing related values. 
-       
-       => This makes code more readable by replacing numerical codes with meaningful names and helps prevent errors by restricting a variable to only those specific values.  
+/* The full form of enum is enumeration or enumerated type.
+       => An enum is a user-defined data type that consists of a fixed set of named constants, or "enumerators," representing related values.
+
+       => This makes code more readable by replacing numerical codes with meaningful names and helps prevent errors by restricting a variable to only those specific values.
 */
 
 /*  /^\+?\d[\d\s-]{9,19}$/
@@ -259,7 +228,7 @@ export default EditUser;
 
     [\d\s-]{9,19} → 9 to 19 characters
 
-    1 + 9 = 10 (minimum), 1 + 19 = 20 (maximum) 
+    1 + 9 = 10 (minimum), 1 + 19 = 20 (maximum)
 */
 
 /* by default React Hook Form validates fields on different “modes”:
@@ -272,15 +241,15 @@ export default EditUser;
 
     "all" → validates on change and blur
 
-    "onTouched" → after the first blur 
+    "onTouched" → after the first blur
 */
 
 /* You’re looking at a form field component built with:
-      
+
     => React Hook Form (RHF) → handles form state & validation.
-    
+
     => Zod → schema validation library (often integrated with RHF via zodResolver).
-    
+
     => shadcn/ui form components (FormField, FormItem, FormLabel, etc.) → just UI wrappers that connect nicely with RHF.
 
         Let’s break down your snippet:
@@ -293,11 +262,11 @@ export default EditUser;
             ...
         )}
         />
-        
+
     => control={form.control} → comes from useForm() in RHF. It’s the object that manages the form state.
-    
+
     => name="email" → tells RHF which field in the form this component is bound to.
-    
+
     => render={({ field }) => (...)} → RHF passes field props (like onChange, onBlur, value, ref) that you spread into your input. This connects the <Input> to RHF.
 
         2. Inside the render → shadcn/ui structure
@@ -311,15 +280,15 @@ export default EditUser;
         </FormDescription>
         <FormMessage />
         </FormItem>
-        
+
     => <FormItem> → wrapper for one field.
-    
+
     => <FormLabel> → field label (Email).
-    
+
     => <FormControl> → wraps the actual input, ensures consistent styling.
-    
+
     => <Input {...field} /> → the real input box. Spreading ...field wires it into RHF (so typing updates RHF state).
-    
+
     => <FormDescription> → helper text shown under the input.
 
     => <FormMessage> → displays validation errors (comes from Zod via RHF).
@@ -340,16 +309,16 @@ export default EditUser;
             resolver: zodResolver(formSchema),
             defaultValues: { email: "" },
             })
-            
+
     => resolver: zodResolver(formSchema) → connects Zod to RHF.
 
     => If validation fails (e.g. invalid email), RHF passes the error to <FormMessage />.
-            
+
     ✅ Putting it all together:
-    
+
     => RHF manages state & validation.
-    => Zod provides the validation schema.    
+    => Zod provides the validation schema.
     => FormField links RHF with the UI.
     => FormMessage shows Zod validation errors.
-    => The rest is just styled components for structure and consistency. 
+    => The rest is just styled components for structure and consistency.
 */
