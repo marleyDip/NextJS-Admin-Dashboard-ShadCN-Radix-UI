@@ -19,16 +19,18 @@ import Image from "next/image";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Payment = {
-  id: string;
-  userId: string;
-  amount: number;
-  fullname: string;
-  email: string;
-  status: "pending" | "processing" | "success" | "failed";
+export type Product = {
+  id: string | number;
+  name: string;
+  shortDescription: string;
+  description: string;
+  price: number;
+  sizes: string[];
+  colors: string[];
+  images: Record<string, string>;
 };
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Product>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -47,90 +49,58 @@ export const columns: ColumnDef<Payment>[] = [
         className="cursor-pointer"
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
       />
     ),
-    enableSorting: false,
-    enableHiding: false,
   },
+
   {
-    accessorKey: "fullname",
-    header: "User",
+    accessorKey: "image",
+    header: "Image",
+    cell: ({ row }) => {
+      const product = row.original;
+
+      return (
+        <div className="w-9 h-9 relative">
+          <Image
+            src={product.images[product.colors[0]]}
+            alt={product.name}
+            fill
+            className="object-cover rounded-full"
+          />
+        </div>
+      );
+    },
   },
+
   {
-    accessorKey: "email",
+    accessorKey: "name",
+    header: "Name",
+  },
+
+  {
+    accessorKey: "price",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Email
+          Price
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
   },
+
   {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => {
-      const status = row.getValue("status");
-
-      return (
-        <div
-          className={cn(
-            `p-1 rounded-md shadow-sm w-max text-xs`,
-            status === "pending" && "bg-yellow-500/40",
-            status === "success" && "bg-green-500/40",
-            status === "failed" && "bg-red-500/40"
-          )}
-        >
-          {status as string}
-        </div>
-      );
-    },
+    accessorKey: "shortDescription",
+    header: "Description",
   },
-  {
-    accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"));
 
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "BDT",
-      }).format(amount);
-
-      return (
-        <div className="text-right font-medium flex items-center justify-end gap-0.5">
-          {/* Light mode image */}
-          <Image
-            src="/taka.png"
-            alt="BD Taka Icon"
-            width={16}
-            height={16}
-            className="dark:hidden"
-          />
-
-          {/* Dark mode image */}
-          <Image
-            src="/taka-white.png"
-            alt="BD Taka Icon (white)"
-            width={16}
-            height={16}
-            className="hidden dark:block"
-          />
-
-          <span>{amount}</span>
-        </div>
-      );
-    },
-  },
   {
     id: "actions",
     cell: ({ row }) => {
-      const payment = row.original;
+      const product = row.original;
 
       return (
         <DropdownMenu>
@@ -145,18 +115,18 @@ export const columns: ColumnDef<Payment>[] = [
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
+              onClick={() =>
+                navigator.clipboard.writeText(product.id.toString())
+              }
             >
-              Copy payment ID
+              Copy product ID
             </DropdownMenuItem>
 
             <DropdownMenuSeparator />
 
             <DropdownMenuItem>
-              <Link href={`/users/${payment.userId}`}>View customer</Link>
+              <Link href={`/products/${product.id}`}>View Product</Link>
             </DropdownMenuItem>
-
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

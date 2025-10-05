@@ -275,7 +275,7 @@ const PaymentsPage = async () => {
 
   return (
     <div className="">
-      <div className="p-4 bg-secondary rounded-md mb-4">
+      <div className="mb-8 p-4 bg-secondary rounded-md">
         <h1 className="font-semibold">All Payments</h1>
       </div>
 

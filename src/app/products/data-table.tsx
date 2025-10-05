@@ -79,7 +79,7 @@ export function DataTable<TData, TValue>({
             className="m-4 hover:-translate-x-1 transition-transform duration-200"
           >
             <Trash2 className="w-4 h-4" />
-            Delete Payment(s)
+            Delete Product(s)
           </Button>
         </div>
       ) : (
