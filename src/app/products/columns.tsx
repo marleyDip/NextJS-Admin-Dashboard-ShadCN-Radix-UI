@@ -2,7 +2,7 @@
 
 import React from "react";
 import { ColumnDef } from "@tanstack/react-table";
-import { cn } from "@/lib/utils";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -79,6 +79,8 @@ export const columns: ColumnDef<Product>[] = [
 
   {
     accessorKey: "price",
+
+    // Custom header to include sorting
     header: ({ column }) => {
       return (
         <Button
@@ -86,9 +88,46 @@ export const columns: ColumnDef<Product>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Price
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="h-4 w-4" />
         </Button>
       );
+    },
+
+    // Custom cell to format price with currency symbol
+    cell: ({ row }) => {
+      const amount = parseFloat(row.getValue("price")).toFixed(2);
+
+      return (
+        <div className="font-medium flex items-center gap-0.5">
+          {/* Light mode image */}
+          <Image
+            src="/taka.png"
+            alt="BD Taka Icon"
+            width={16}
+            height={16}
+            className="dark:hidden"
+          />
+
+          {/* Dark mode image */}
+          <Image
+            src="/taka-white.png"
+            alt="BD Taka Icon (white)"
+            width={16}
+            height={16}
+            className="hidden dark:block"
+          />
+
+          <span>{amount}</span>
+        </div>
+      );
+    },
+
+    // Allow numeric filtering
+    filterFn: (row, id, value) => {
+      const price = Number(row.getValue(id));
+      const input = Number(value);
+      if (isNaN(input)) return true; // show all if input not number
+      return price >= input;
     },
   },
 
@@ -133,26 +172,3 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
 ];
-
-/* / Format with 2 decimals, no currency symbol
-            const formatted = new Intl.NumberFormat("en-BD", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-            }).format(amount)
-
-            return (
-                <div className="text-right font-medium">
-                    <span className="text-xl font-bold align-middle">৳</span>  {formatted}
-                </div>
-            )/ Format with 2 decimals, no currency symbol
-            const formatted = new Intl.NumberFormat("en-BD", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-            }).format(amount)
-
-            return (
-                <div className="text-right font-medium">
-                    <span className="text-xl font-bold align-middle">৳</span>  {formatted}
-                </div>
-            )
-*/

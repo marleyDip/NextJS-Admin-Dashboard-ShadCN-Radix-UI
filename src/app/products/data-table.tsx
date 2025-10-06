@@ -88,13 +88,22 @@ export function DataTable<TData, TValue>({
           <div className="flex items-center p-4">
             {/* Filter email by search */}
             <Input
-              placeholder="Filter emails..."
+              placeholder="Filter names or prices..."
               value={
-                (table.getColumn("email")?.getFilterValue() as string) ?? ""
+                ((table.getColumn("name")?.getFilterValue() as string) ||
+                  (table.getColumn("price")?.getFilterValue() as string)) ??
+                ""
               }
-              onChange={(event) =>
-                table.getColumn("email")?.setFilterValue(event.target.value)
-              }
+              onChange={(event) => {
+                const value = event.target.value;
+
+                // Filter name column
+                table.getColumn("name")?.setFilterValue(value);
+
+                // Filter price column (convert to number only if numeric)
+                //const numericValue = Number(value);
+                table.getColumn("price")?.setFilterValue(value);
+              }}
               className="max-w-sm placeholder-gray-500"
             />
             {/* Filter email by search */}
