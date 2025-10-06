@@ -47,6 +47,7 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
+  const [globalFilter, setGlobalFilter] = useState("");
 
   const table = useReactTable({
     data,
@@ -59,11 +60,21 @@ export function DataTable<TData, TValue>({
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
+    onGlobalFilterChange: setGlobalFilter,
     state: {
       sorting,
       columnFilters,
       columnVisibility,
       rowSelection,
+      globalFilter,
+    },
+    globalFilterFn: (row, columnId, filterValue) => {
+      const search = filterValue.toString().toLowerCase().trim();
+      const name = row.original.fullName?.toLowerCase() ?? "";
+      const email = row.original.email?.toLowerCase() ?? "";
+
+      // OR logic
+      return name.includes(search) || email.includes(search);
     },
   });
 
@@ -86,18 +97,14 @@ export function DataTable<TData, TValue>({
         <>
           {/* Filter email & Column Visibility */}
           <div className="flex items-center p-4">
-            {/* Filter email by search */}
+            {/* Filter name, email by search */}
             <Input
-              placeholder="Filter emails..."
-              value={
-                (table.getColumn("email")?.getFilterValue() as string) ?? ""
-              }
-              onChange={(event) =>
-                table.getColumn("email")?.setFilterValue(event.target.value)
-              }
-              className="max-w-sm placeholder-gray-500"
+              placeholder="Quick search — Name or Email..."
+              className="max-w-sm dark:!placeholder-gray-300 !placeholder-gray-600"
+              value={globalFilter ?? ""}
+              onChange={(e) => setGlobalFilter(e.target.value)}
             />
-            {/* Filter email by search */}
+            {/* Filter name, email by search */}
 
             {/* Column Visibility */}
             <DropdownMenu>
