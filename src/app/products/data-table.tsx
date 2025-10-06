@@ -70,7 +70,7 @@ export function DataTable<TData, TValue>({
       columnFilters,
       columnVisibility,
       rowSelection,
-      globalFilter: globalFilterValue,
+      globalFilter: globalFilterValue, // explicitly mapping
     },
     onGlobalFilterChange: setGlobalFilterValue,
     globalFilterFn: (row, columnId, filterValue) => {
@@ -246,6 +246,41 @@ export function DataTable<TData, TValue>({
     </div>
   );
 }
+
+/* What state: { globalFilter: globalFilterValue } means
+
+    => Here, the variable is named differently (globalFilterValue) — so you must explicitly assign it to the key globalFilter that React Table expects.
+
+    => In React Table, globalFilter is a special state that holds the current value of your global search — the text you type into the search box that should apply to the entire table (across multiple columns).
+
+    => If you removed globalFilter from the state, the table would not know what to filter by — your input value would exist in React but never affect the table.
+
+  1. const [globalFilterValue, setGlobalFilterValue] = useState("");
+      = This line defines a piece of React state — a variable to store whatever the user types in the search input.
+      = globalFilterValue === "john"
+
+  2. state: { globalFilter: globalFilterValue, },
+      = Hey, use the value stored in my globalFilterValue state as the active global filter.
+      = So React Table uses that to decide which rows to show or hide.
+
+  3. onGlobalFilterChange: setGlobalFilterValue,
+      = This connects React Table’s internal updates to your own React state — so if the table internally changes the filter (e.g., user clears it), your state updates too.
+
+  4. globalFilterFn: (row, columnId, filterValue) => { your custom filtering logic }
+      = This function runs for each row in the table, using the filterValue (your input text) to decide whether that row should stay visible (true) or be hidden (false).
+
+ 🔹 So together:
+      = globalFilterValue =>>	React state holding the current search text
+      = setGlobalFilterValue =>>	Function to update that search text
+      = globalFilter =>>	React Table’s way of connecting to that state
+      = onGlobalFilterChange =>>	Syncs React Table changes back to your React state
+      = globalFilterFn =>>	The function that decides which rows match the search
+
+  🧠 TL;DR
+      = globalFilter is like a bridge between your search box and the table.
+      = It stores the current search value React Table should use.
+      = You use your React state (globalFilterValue) to control it.
+*/
 
 /* globalFilterFn: (row, columnId, filterValue) => {
       const name = row.original.name.toLowerCase();

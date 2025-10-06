@@ -66,8 +66,9 @@ export function DataTable<TData, TValue>({
       columnFilters,
       columnVisibility,
       rowSelection,
-      globalFilter,
+      globalFilter, // shorthand for globalFilter: globalFilter
     },
+    //globalFilterFn: (row, _, filterValue) => {
     globalFilterFn: (row, columnId, filterValue) => {
       const search = filterValue.toString().toLowerCase().trim();
       const name = row.original.fullName?.toLowerCase() ?? "";
@@ -99,8 +100,8 @@ export function DataTable<TData, TValue>({
           <div className="flex items-center p-4">
             {/* Filter name, email by search */}
             <Input
-              placeholder="Quick search — Name or Email..."
-              className="max-w-sm dark:!placeholder-gray-300 !placeholder-gray-600"
+              placeholder="নাম বা ইমেইল দিয়ে খুঁজুন..."
+              className="max-w-[180px] sm:max-w-sm md:max-w-md dark:!placeholder-gray-300 !placeholder-gray-600"
               value={globalFilter ?? ""}
               onChange={(e) => setGlobalFilter(e.target.value)}
             />
@@ -198,3 +199,39 @@ export function DataTable<TData, TValue>({
     </div>
   );
 }
+
+/* Why this version needs globalFilter state
+
+    ✅ Use column filters
+    → When you have separate filter inputs for each column.
+
+    ✅ Use global filter (this one)
+    → When you want one single search box that matches multiple fields (like name or email or phone).
+
+    = You are not filtering specific columns (like fullName or email directly).
+
+    = You’re telling React Table: “Here’s one single global search term, please filter all rows based on this logic.”
+
+    = React Table doesn’t automatically store that globalFilter value — you must keep it in your own state (useState).
+
+    = Then onGlobalFilterChange tells React Table whenever it changes.
+
+  state: { globalFilter }
+    = means → “Hey table, here’s the current global filter text to use.”
+
+  onGlobalFilterChange: setGlobalFilter
+    = means → “Whenever the user types, update my globalFilter variable.”
+
+Feature	       peer-column version	       Global filter version
+Filter type	      Column filters	            Global filter
+
+Controlled by	      React Table	             You (React state)
+
+State needed	           ❌ No	                    ✅ Yes
+
+Logic	         One filter per column	          One unified
+
+Works across all columns	❌ No	                  ✅ Yes
+
+Uses globalFilterFn	      ❌ No	                  ✅ Yes
+*/
