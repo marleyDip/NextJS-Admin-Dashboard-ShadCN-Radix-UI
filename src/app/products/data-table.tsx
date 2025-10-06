@@ -32,7 +32,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { Trash2 } from "lucide-react";
+import { Info, Trash2 } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -47,6 +52,7 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
+  const [globalFilterValue, setGlobalFilterValue] = useState("");
 
   const table = useReactTable({
     data,
@@ -64,6 +70,31 @@ export function DataTable<TData, TValue>({
       columnFilters,
       columnVisibility,
       rowSelection,
+      globalFilter: globalFilterValue,
+    },
+    onGlobalFilterChange: setGlobalFilterValue,
+    globalFilterFn: (row, columnId, filterValue) => {
+      // ✅ Access data from the row
+      const name = row.original.name?.toString().toLowerCase() ?? "";
+      const price = Number(row.original.price);
+      const input = filterValue.toString().toLowerCase().trim();
+
+      // ✅ If input is empty — show all rows
+      if (input === "") return true;
+
+      if (input.startsWith(">=")) return price >= Number(input.slice(2));
+      if (input.startsWith("<=")) return price <= Number(input.slice(2));
+      if (input.startsWith(">")) return price > Number(input.slice(1));
+      if (input.startsWith("<")) return price < Number(input.slice(1));
+      if (input.startsWith("=")) return price === Number(input.slice(1));
+
+      // ✅ If input is numeric — filter by price
+      if (!isNaN(Number(input))) {
+        return price >= Number(input);
+      }
+
+      // Otherwise — filter by name
+      return name.includes(input);
     },
   });
 
@@ -84,29 +115,44 @@ export function DataTable<TData, TValue>({
         </div>
       ) : (
         <>
-          {/* Filter email & Column Visibility */}
+          {/* Filter name, price & Column Visibility */}
           <div className="flex items-center p-4">
-            {/* Filter email by search */}
+            {/* Filter name, price by search */}
             <Input
-              placeholder="Filter names or prices..."
-              value={
-                ((table.getColumn("name")?.getFilterValue() as string) ||
-                  (table.getColumn("price")?.getFilterValue() as string)) ??
-                ""
-              }
-              onChange={(event) => {
-                const value = event.target.value;
-
-                // Filter name column
-                table.getColumn("name")?.setFilterValue(value);
-
-                // Filter price column (convert to number only if numeric)
-                //const numericValue = Number(value);
-                table.getColumn("price")?.setFilterValue(value);
-              }}
-              className="max-w-sm placeholder-gray-500"
+              placeholder="Search Name or Price (<=, =>, >, <, =, abc, 10 )"
+              value={globalFilterValue}
+              onChange={(e) => setGlobalFilterValue(e.target.value)}
+              className="max-w-[150px] sm:max-w-sm md:max-w-md dark:!placeholder-gray-300 !placeholder-gray-600"
             />
-            {/* Filter email by search */}
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button className="ml-2 text-gray-400 hover:text-gray-600 cursor-pointer">
+                  <Info className="w-6 h-6" />
+                </button>
+              </TooltipTrigger>
+
+              <TooltipContent className="max-w-[260px] sm:max-w-sm md:max-w-md lg:max-w-lg dark:bg-lime-300 bg-fuchsia-600">
+                <p className="text-sm font-medium">
+                  নিচের চিহ্নগুলো ব্যবহার করে পণ্যগুলোর দাম অনুযায়ী খুঁজতে
+                  পারেন:
+                  <br />
+                  <strong>&gt;1000</strong> = 1000 এর চেয়ে বেশি দাম
+                  <br />
+                  <strong>&lt;1000</strong> = 1000 এর চেয়ে কম দাম
+                  <br />
+                  <strong>&gt;=1000</strong> = 1000 বা তার চেয়ে বেশি দাম
+                  <br />
+                  <strong>&lt;=1000</strong> = 1000 বা তার চেয়ে কম দাম
+                  <br />
+                  <strong>=1000</strong> = ঠিক 1000 দাম
+                  <br />
+                  <br />
+                  অথবা পণ্যের নাম লিখে নাম অনুযায়ী খুঁজতে পারেন।
+                </p>
+              </TooltipContent>
+            </Tooltip>
+            {/* Filter name, price by search */}
 
             {/* Column Visibility */}
             <DropdownMenu>
@@ -135,7 +181,7 @@ export function DataTable<TData, TValue>({
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          {/* Filter email & Column Visibility */}
+          {/* Filter name, price & Column Visibility */}
         </>
       )}
       {/* Delete payment */}
@@ -200,3 +246,88 @@ export function DataTable<TData, TValue>({
     </div>
   );
 }
+
+/* globalFilterFn: (row, columnId, filterValue) => {
+      const name = row.original.name.toLowerCase();
+      const price = Number(row.original.price);
+      const inputRaw = filterValue.toString().trim();
+
+      if (!inputRaw) return true; // show all rows if empty
+
+      const firstChar = inputRaw.charAt(0);
+      const rest = inputRaw.slice(1).trim();
+      const value = Number(rest);
+
+      // Handle operator + number
+      if (!isNaN(value)) {
+        switch (firstChar) {
+          case "+":
+            return price > value; // +1000 => price > 1000
+          case "-":
+            return price < value; // -500  => price < 500
+          case "=":
+            return price === value; // =1500 => price === 1500
+          case "*":
+            return price >= value; // *1500 => price >= 1500
+          case "/":
+            return price <= value; // /1500 => price <= 1500
+        }
+      }
+
+      // If first char is not an operator but the whole input is numeric
+      if (!isNaN(Number(inputRaw))) return price >= Number(inputRaw);
+
+      // Otherwise treat as name search
+      return name.includes(inputRaw.toLowerCase());
+    },
+*/
+
+/* value={
+    ((table.getColumn("name")?.getFilterValue() as string) ||
+      (table.getColumn("price")?.getFilterValue() as string)) ??
+    ""
+  }
+
+  onChange={(event) => {
+    const value = event.target.value;
+
+    if (isNaN(Number(value))) {
+      // text → filter by name only
+      table.getColumn("name")?.setFilterValue(value);
+      table.getColumn("price")?.setFilterValue("");
+    } else {
+      // number → filter by price only
+      table.getColumn("name")?.setFilterValue("");
+      table.getColumn("price")?.setFilterValue(value);
+    }
+
+  //Filter name column
+  //table.getColumn("name")?.setFilterValue(value);
+  }}
+*/
+
+/*  <p className="text-sm font-medium">
+      You can filter by price using operators:
+      <br />
+      <strong>&gt;1000</strong> - price greater than 1000
+      <br />
+      <strong>&lt;1000</strong> - price less than 1000
+      <br />
+      <strong>&gt;=1000</strong> - price greater or equal to 1000
+      <br />
+      <strong>&lt;=1000</strong> - price less or equal to 1000
+      <br />
+
+      // Operator tooltip
+      <strong>=1000</strong> - price exactly 1000
+      <strong>+1000</strong> - price greater than 1000
+      <br />
+      <strong>-1000</strong> - price less than 1000
+      <br />
+      <strong>*1000</strong> - price greater or equal to 1000
+      <br />
+      <strong>/1000</strong> - price less or equal to 1000
+      <br />
+      <strong>=1000</strong> - price exactly 1000
+    </p>
+*/

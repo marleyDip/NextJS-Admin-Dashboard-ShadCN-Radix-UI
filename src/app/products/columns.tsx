@@ -123,12 +123,19 @@ export const columns: ColumnDef<Product>[] = [
     },
 
     // Allow numeric filtering
-    filterFn: (row, id, value) => {
-      const price = Number(row.getValue(id));
-      const input = Number(value);
-      if (isNaN(input)) return true; // show all if input not number
-      return price >= input;
-    },
+    // row =>	The current row’s data. You can access each cell’s value from it.
+    // id => The column ID that’s being filtered (in this case "price").
+    // value => The current filter value — whatever the user typed in your input box.
+    // filterFn: (row, id, value) => {
+    //   //console.log("Filtering row:", row.getValue(id), "with value:", value);
+    //   const price = Number(row.getValue(id));
+    //   const input = value.toString().trim();
+
+    //   if (input === "") return true;
+    //   if (isNaN(Number(input))) return true; //checks if that conversion failed (for example "abc" → NaN) non-numeric = ignore
+
+    //   return price >= Number(input);
+    // },
   },
 
   {
