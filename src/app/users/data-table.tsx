@@ -70,12 +70,25 @@ export function DataTable<TData, TValue>({
     },
     //globalFilterFn: (row, _, filterValue) => {
     globalFilterFn: (row, columnId, filterValue) => {
-      const search = filterValue.toString().toLowerCase().trim();
-      const name = row.original.fullName?.toLowerCase() ?? "";
-      const email = row.original.email?.toLowerCase() ?? "";
+      const search = filterValue?.toString().toLowerCase().trim();
+
+      const name = row.original.fullName?.toLowerCase().trim() ?? "";
+      const email = row.original.email?.toLowerCase().trim() ?? "";
+      const status = row.original.status?.toString().toLowerCase().trim() ?? "";
+
+      //console.log("status:", row.original.status, "search:", search);
+
+      //console.log(`"${status}" === "${search}"`, status.includes(search));
 
       // OR logic
-      return name.includes(search) || email.includes(search);
+      return (
+        name.includes(search) ||
+        email.includes(search) ||
+        status.startsWith(search)
+
+        // string.startsWith(substring, position)
+        //status === search exact match for status
+      );
     },
   });
 
