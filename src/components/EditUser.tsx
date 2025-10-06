@@ -17,13 +17,6 @@ import {
 } from "./ui/form";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -85,6 +78,7 @@ const EditUser = () => {
         <SheetDescription asChild>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              {/* Full Name */}
               <FormField
                 control={form.control}
                 name="fullname"
@@ -100,6 +94,7 @@ const EditUser = () => {
                 )}
               />
 
+              {/* Email */}
               <FormField
                 control={form.control}
                 name="email"
@@ -120,6 +115,7 @@ const EditUser = () => {
                 )}
               />
 
+              {/* Phone */}
               <FormField
                 control={form.control}
                 name="phone"
@@ -140,6 +136,7 @@ const EditUser = () => {
                 )}
               />
 
+              {/* Address */}
               <FormField
                 control={form.control}
                 name="address"
@@ -160,6 +157,7 @@ const EditUser = () => {
                 )}
               />
 
+              {/* City */}
               <FormField
                 control={form.control}
                 name="city"
