@@ -113,7 +113,7 @@ export function DataTable<TData, TValue>({
           <div className="flex items-center p-4">
             {/* Filter name, email by search */}
             <Input
-              placeholder="নাম বা ইমেইল দিয়ে খুঁজুন..."
+              placeholder="নাম, ইমেইল বা স্ট্যাটাস দিয়ে খুঁজুন…"
               className="max-w-[180px] sm:max-w-sm md:max-w-md dark:!placeholder-gray-300 !placeholder-gray-600"
               value={globalFilter ?? ""}
               onChange={(e) => setGlobalFilter(e.target.value)}
