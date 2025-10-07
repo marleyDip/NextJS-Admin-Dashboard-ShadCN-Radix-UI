@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   ColumnDef,
@@ -162,6 +162,72 @@ export function DataTable<TData, TValue>({
 
   //console.log(rowSelection);
 
+  // 📝 Placeholder texts to rotate
+  const desktopTexts = [
+    "failed>=100 for filter by status & amount together",
+    "Type <=100, >=100, or =100 to filter by price",
+    "Filter by Name...",
+    "Search by Email...",
+    "Find by Status (type partial words like 'pen' for pending, 'succ' for success)",
+  ];
+
+  // 📱 Shorter cycle for mobile
+  const mobileTexts = [
+    "failed>=100",
+    "<=100 or >=100,",
+    "Filter by Name...",
+    "Search by Email...",
+    "type pen, succ, fail",
+  ];
+
+  const [texts, setTexts] = useState<string[]>(desktopTexts);
+  const [placeholder, setPlaceholder] = useState("");
+  const [textIndex, setTextIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  // Detect screen size (responsive)
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        // sm breakpoint → use mobile texts
+        setTexts(mobileTexts);
+      } else {
+        setTexts(desktopTexts);
+      }
+    };
+
+    handleResize(); // run on mount
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Typing animation
+  useEffect(() => {
+    let typingSpeed = isDeleting ? 50 : 80;
+    const currentText = texts[textIndex];
+
+    const handleTyping = () => {
+      setPlaceholder((prev) => {
+        if (isDeleting) return currentText.substring(0, prev.length - 1);
+        return currentText.substring(0, prev.length + 1);
+      });
+
+      // when finished typing → pause → start deleting
+      if (!isDeleting && placeholder === currentText) {
+        setTimeout(() => setIsDeleting(true), 1200);
+      }
+
+      // when deleting done → move to next text
+      if (isDeleting && placeholder === "") {
+        setIsDeleting(false);
+        setTextIndex((prev) => (prev + 1) % texts.length);
+      }
+    };
+
+    const timer = setTimeout(handleTyping, typingSpeed);
+    return () => clearTimeout(timer);
+  }, [placeholder, isDeleting, textIndex, texts]);
+
   return (
     <div className="rounded-md border">
       {/* Delete payment */}
@@ -181,8 +247,8 @@ export function DataTable<TData, TValue>({
           <div className="flex items-center p-4">
             {/* Filter email by search */}
             <Input
-              placeholder="Filter Payments by Name, Emails, Status, Amount"
-              className="max-w-[160px] sm:max-w-sm md:max-w-md dark:!placeholder-gray-300 !placeholder-gray-600"
+              placeholder={placeholder}
+              className="max-w-[160px] sm:max-w-sm md:max-w-lg dark:!placeholder-gray-300 !placeholder-gray-600 animate-pulse transition-all duration-300"
               value={globalFilter ?? ""}
               onChange={(e) => setGlobalFilter(e.target.value)}
             />
@@ -196,20 +262,33 @@ export function DataTable<TData, TValue>({
 
               <TooltipContent className="max-w-[260px] sm:max-w-sm md:max-w-md lg:max-w-lg dark:bg-lime-300 bg-fuchsia-600">
                 <p className="text-sm font-medium">
-                  You can filter by price using operators:
+                  You can filter by amount using operators:
                   <br />
-                  <strong>=100</strong> - price exactly 100
+                  <strong>=100</strong> — amount exactly 100
                   <br />
-                  <strong>&gt;100</strong> - price greater than 100
+                  <strong>&gt;100</strong> — amount greater than 100
                   <br />
-                  <strong>&lt;100</strong> - price less than 100
+                  <strong>&lt;100</strong> — amount less than 100
                   <br />
-                  <strong>&gt;=100</strong> - price greater or equal to 100
+                  <strong>&gt;=100</strong> — amount greater or equal to 100
                   <br />
-                  <strong>&lt;=100</strong> - price less or equal to 100
+                  <strong>&lt;=100</strong> — amount less or equal to 100
+                  <br />
+                  <strong>100</strong> — amount greater or equal to 100
+                  (default)
                   <br />
                   <br />
-                  Or you can filter transaction by User Name, Email, Status.
+                  You can also filter by status and amount together:
+                  <br />
+                  <strong>failed&gt;=100</strong> — status failed and amount ≥
+                  100
+                  <br />
+                  <strong>success&lt;100</strong> — status success and amount
+                  &lt; 100
+                  <br />
+                  <br />
+                  Or simply search by <strong>User Name</strong>,{" "}
+                  <strong>Email</strong>, or <strong>Status</strong>.
                 </p>
               </TooltipContent>
             </Tooltip>
