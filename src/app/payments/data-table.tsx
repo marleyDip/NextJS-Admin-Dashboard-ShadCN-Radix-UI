@@ -110,6 +110,7 @@ export function DataTable<TData, TValue>({
         //const [statusPart, valuePart] = ["failed", "120"];
         //console.log(statusPart); // "failed"
         //console.log(valuePart); // "120"
+        // string.split(separator, limit)
 
         // Destructure Assignment
         const [statusPart, valuePart] = inputRaw

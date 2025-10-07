@@ -6,8 +6,6 @@ import {
   Search,
   Settings,
   Plus,
-  Projector,
-  ChevronDown,
   Calendar,
   Shirt,
   EllipsisVertical,
@@ -32,17 +30,9 @@ import {
   SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
   SidebarSeparator,
   useSidebar,
 } from "./ui/sidebar";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "./ui/collapsible";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -52,13 +42,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { Sheet, SheetTrigger } from "./ui/sheet";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 import Link from "next/link";
 import Image from "next/image";
 
-import { Sheet, SheetTrigger } from "./ui/sheet";
 import EditUser from "./EditUser";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import AddOrder from "./AddOrder";
+import AddUser from "./AddUser";
+import AddCategory from "./AddCategory";
 
 const items = [
   {
@@ -200,7 +193,7 @@ const AppSidebar = () => {
                     </SidebarMenuButton>
                   </SheetTrigger>
 
-                  <EditUser />
+                  <AddCategory />
                 </Sheet>
               </SidebarMenuItem>
               {/* Add Category */}
@@ -243,7 +236,7 @@ const AppSidebar = () => {
                     </SidebarMenuButton>
                   </SheetTrigger>
 
-                  <EditUser />
+                  <AddUser />
                 </Sheet>
               </SidebarMenuItem>
               {/* Add User */}
@@ -274,7 +267,7 @@ const AppSidebar = () => {
               </SidebarMenuItem>
               {/* All Transactions */}
 
-              {/* Add User */}
+              {/* Add Order */}
               <SidebarMenuItem>
                 <Sheet>
                   <SheetTrigger asChild>
@@ -286,10 +279,10 @@ const AppSidebar = () => {
                     </SidebarMenuButton>
                   </SheetTrigger>
 
-                  <EditUser />
+                  <AddOrder />
                 </Sheet>
               </SidebarMenuItem>
-              {/* Add User */}
+              {/* Add Order */}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
