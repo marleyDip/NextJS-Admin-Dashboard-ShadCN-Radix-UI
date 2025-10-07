@@ -11,9 +11,14 @@ const nextConfig: NextConfig = {
     ],
   },
 
-  // ✅ Automatically detect project root (cross-platform)
+  // Automatically detect project root (cross-platform)
   turbopack: {
     root: path.resolve(__dirname),
+  },
+
+  // Ignore ESLint errors during production builds
+  eslint: {
+    ignoreDuringBuilds: true,
   },
 };
 

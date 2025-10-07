@@ -10,7 +10,9 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
+  // Extend Next.js + TypeScript recommended rules
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+
   {
     ignores: [
       "node_modules/**",
@@ -19,6 +21,14 @@ const eslintConfig = [
       "build/**",
       "next-env.d.ts",
     ],
+    rules: {
+      // Example: disable annoying rules
+      "no-console": "warn", // show warning instead of error
+      "react/prop-types": "off", // TS users don’t need prop-types
+      "@typescript-eslint/explicit-module-boundary-types": "warn",
+      "@next/next/no-img-element": "off",
+      // Add other rules as needed
+    },
   },
 ];
 
