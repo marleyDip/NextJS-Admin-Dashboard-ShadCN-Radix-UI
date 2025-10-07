@@ -97,7 +97,7 @@ const AddOrder = () => {
               <FormField
                 control={form.control}
                 name="status"
-                render={({ field }) => (
+                render={() => (
                   <FormItem>
                     <FormLabel>Status</FormLabel>
 

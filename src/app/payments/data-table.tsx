@@ -163,7 +163,7 @@ export function DataTable<TData, TValue>({
 
   //console.log(rowSelection);
 
-  // 📝 Placeholder texts to rotate
+  // Placeholder texts to rotate
   const desktopTexts = [
     "failed>=100 for filter by status & amount together",
     "Type <=100, >=100, or =100 to filter by price",
@@ -172,7 +172,7 @@ export function DataTable<TData, TValue>({
     "Find by Status (type partial words like 'pen' for pending, 'succ' for success)",
   ];
 
-  // 📱 Shorter cycle for mobile
+  // Shorter cycle for mobile
   const mobileTexts = [
     "failed>=100",
     "<=100 or >=100,",
@@ -204,7 +204,7 @@ export function DataTable<TData, TValue>({
 
   // Typing animation
   useEffect(() => {
-    let typingSpeed = isDeleting ? 50 : 80;
+    const typingSpeed = isDeleting ? 50 : 80;
     const currentText = texts[textIndex];
 
     const handleTyping = () => {
