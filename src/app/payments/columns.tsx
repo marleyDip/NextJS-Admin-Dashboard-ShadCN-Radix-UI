@@ -23,7 +23,7 @@ export type Payment = {
   id: string;
   userId: string;
   amount: number;
-  fullname: string;
+  fullName: string;
   email: string;
   status: "pending" | "processing" | "success" | "failed";
 };
@@ -53,10 +53,12 @@ export const columns: ColumnDef<Payment>[] = [
     enableSorting: false,
     enableHiding: false,
   },
+
   {
-    accessorKey: "fullname",
+    accessorKey: "fullName",
     header: "User",
   },
+
   {
     accessorKey: "email",
     header: ({ column }) => {
@@ -71,6 +73,7 @@ export const columns: ColumnDef<Payment>[] = [
       );
     },
   },
+
   {
     accessorKey: "status",
     header: "Status",
@@ -91,16 +94,12 @@ export const columns: ColumnDef<Payment>[] = [
       );
     },
   },
+
   {
     accessorKey: "amount",
     header: () => <div className="text-right">Amount</div>,
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"));
-
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "BDT",
-      }).format(amount);
+      const amount = parseFloat(row.getValue("amount")).toFixed(2);
 
       return (
         <div className="text-right font-medium flex items-center justify-end gap-0.5">
@@ -127,6 +126,7 @@ export const columns: ColumnDef<Payment>[] = [
       );
     },
   },
+
   {
     id: "actions",
     cell: ({ row }) => {
@@ -164,7 +164,12 @@ export const columns: ColumnDef<Payment>[] = [
   },
 ];
 
-/* / Format with 2 decimals, no currency symbol
+/* const formatted = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "BDT",
+      }).format(amount);
+
+ Format with 2 decimals, no currency symbol
             const formatted = new Intl.NumberFormat("en-BD", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,

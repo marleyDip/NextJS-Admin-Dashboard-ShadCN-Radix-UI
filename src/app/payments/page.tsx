@@ -8,7 +8,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "23",
       amount: 134,
       status: "pending",
-      fullname: "Md Sofian Hasan",
+      fullName: "Md Sofian Hasan",
       email: "sofian.hasan@gmail.com",
     },
     {
@@ -16,7 +16,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "24",
       amount: 124,
       status: "success",
-      fullname: "Arif Hossain",
+      fullName: "Arif Hossain",
       email: "arif.hossain@gmail.com",
     },
     {
@@ -24,7 +24,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "25",
       amount: 167,
       status: "failed",
-      fullname: "Nusrat Jahan",
+      fullName: "Nusrat Jahan",
       email: "nusrat.jahan@gmail.com",
     },
     {
@@ -32,7 +32,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "26",
       amount: 145,
       status: "pending",
-      fullname: "Tanvir Ahmed",
+      fullName: "Tanvir Ahmed",
       email: "tanvir.ahmed@gmail.com",
     },
     {
@@ -40,7 +40,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "27",
       amount: 190,
       status: "failed",
-      fullname: "Shaila Akter",
+      fullName: "Shaila Akter",
       email: "shaila.akter@gmail.com",
     },
     {
@@ -48,7 +48,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "28",
       amount: 210,
       status: "success",
-      fullname: "Raihan Chowdhury",
+      fullName: "Raihan Chowdhury",
       email: "raihan.chowdhury@gmail.com",
     },
     {
@@ -56,7 +56,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "29",
       amount: 98,
       status: "pending",
-      fullname: "Labiba Rahman",
+      fullName: "Labiba Rahman",
       email: "labiba.rahman@gmail.com",
     },
     {
@@ -64,7 +64,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "30",
       amount: 132,
       status: "success",
-      fullname: "Imran Khan",
+      fullName: "Imran Khan",
       email: "imran.khan@gmail.com",
     },
     {
@@ -72,7 +72,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "31",
       amount: 178,
       status: "failed",
-      fullname: "Fatema Begum",
+      fullName: "Fatema Begum",
       email: "fatema.begum@gmail.com",
     },
     {
@@ -80,7 +80,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "32",
       amount: 145,
       status: "pending",
-      fullname: "Sabbir Hossain",
+      fullName: "Sabbir Hossain",
       email: "sabbir.hossain@gmail.com",
     },
     {
@@ -88,7 +88,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "33",
       amount: 123,
       status: "success",
-      fullname: "Tania Islam",
+      fullName: "Tania Islam",
       email: "tania.islam@gmail.com",
     },
     {
@@ -96,7 +96,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "34",
       amount: 187,
       status: "success",
-      fullname: "Rashedul Karim",
+      fullName: "Rashedul Karim",
       email: "rashedul.karim@gmail.com",
     },
     {
@@ -104,7 +104,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "35",
       amount: 160,
       status: "pending",
-      fullname: "Nusrat Khanam",
+      fullName: "Nusrat Khanam",
       email: "nusrat.khanam@gmail.com",
     },
     {
@@ -112,7 +112,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "36",
       amount: 135,
       status: "success",
-      fullname: "Shakib Al Hasan",
+      fullName: "Shakib Al Hasan",
       email: "shakib.alhasan@gmail.com",
     },
     {
@@ -120,7 +120,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "37",
       amount: 195,
       status: "success",
-      fullname: "Anika Sultana",
+      fullName: "Anika Sultana",
       email: "anika.sultana@gmail.com",
     },
     {
@@ -128,7 +128,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "38",
       amount: 110,
       status: "pending",
-      fullname: "Fahim Rahman",
+      fullName: "Fahim Rahman",
       email: "fahim.rahman@gmail.com",
     },
     {
@@ -136,7 +136,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "39",
       amount: 142,
       status: "success",
-      fullname: "Samira Akter",
+      fullName: "Samira Akter",
       email: "samira.akter@gmail.com",
     },
     {
@@ -144,7 +144,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "40",
       amount: 170,
       status: "success",
-      fullname: "Rony Chowdhury",
+      fullName: "Rony Chowdhury",
       email: "rony.chowdhury@gmail.com",
     },
     {
@@ -152,7 +152,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "41",
       amount: 150,
       status: "pending",
-      fullname: "Farhana Karim",
+      fullName: "Farhana Karim",
       email: "farhana.karim@gmail.com",
     },
     {
@@ -160,7 +160,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "42",
       amount: 125,
       status: "success",
-      fullname: "Joynal Abedin",
+      fullName: "Joynal Abedin",
       email: "joynal.abedin@gmail.com",
     },
     {
@@ -168,7 +168,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "43",
       amount: 185,
       status: "success",
-      fullname: "Mousumi Rahman",
+      fullName: "Mousumi Rahman",
       email: "mousumi.rahman@gmail.com",
     },
     {
@@ -176,7 +176,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "44",
       amount: 140,
       status: "pending",
-      fullname: "Rafiq Ahmed",
+      fullName: "Rafiq Ahmed",
       email: "rafiq.ahmed@gmail.com",
     },
     {
@@ -184,7 +184,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "45",
       amount: 155,
       status: "success",
-      fullname: "Salma Akter",
+      fullName: "Salma Akter",
       email: "salma.akter@gmail.com",
     },
     {
@@ -192,7 +192,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "46",
       amount: 180,
       status: "success",
-      fullname: "Tariq Hossain",
+      fullName: "Tariq Hossain",
       email: "tariq.hossain@gmail.com",
     },
     {
@@ -200,7 +200,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "47",
       amount: 130,
       status: "pending",
-      fullname: "Rumana Begum",
+      fullName: "Rumana Begum",
       email: "rumana.begum@gmail.com",
     },
     {
@@ -208,7 +208,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "48",
       amount: 165,
       status: "success",
-      fullname: "Fahad Chowdhury",
+      fullName: "Fahad Chowdhury",
       email: "fahad.chowdhury@gmail.com",
     },
     {
@@ -216,7 +216,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "49",
       amount: 200,
       status: "success",
-      fullname: "Nabila Khan",
+      fullName: "Nabila Khan",
       email: "nabila.khan@gmail.com",
     },
     {
@@ -224,7 +224,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "50",
       amount: 120,
       status: "pending",
-      fullname: "Rashidul Islam",
+      fullName: "Rashidul Islam",
       email: "rashidul.islam@gmail.com",
     },
     {
@@ -232,7 +232,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "51",
       amount: 138,
       status: "success",
-      fullname: "Shamima Rahman",
+      fullName: "Shamima Rahman",
       email: "shamima.rahman@gmail.com",
     },
     {
@@ -240,7 +240,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "52",
       amount: 175,
       status: "success",
-      fullname: "Aminul Haque",
+      fullName: "Aminul Haque",
       email: "aminul.haque@gmail.com",
     },
     {
@@ -248,7 +248,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "53",
       amount: 145,
       status: "pending",
-      fullname: "Nafisa Akter",
+      fullName: "Nafisa Akter",
       email: "nafisa.akter@gmail.com",
     },
     {
@@ -256,7 +256,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "54",
       amount: 160,
       status: "success",
-      fullname: "Saifur Rahman",
+      fullName: "Saifur Rahman",
       email: "saifur.rahman@gmail.com",
     },
     {
@@ -264,7 +264,7 @@ const getData = async (): Promise<Payment[]> => {
       userId: "55",
       amount: 190,
       status: "success",
-      fullname: "Fariha Khanam",
+      fullName: "Fariha Khanam",
       email: "fariha.khanam@gmail.com",
     },
   ];
