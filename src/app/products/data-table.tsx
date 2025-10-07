@@ -65,6 +65,7 @@ export function DataTable<TData, TValue>({
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
+    onGlobalFilterChange: setGlobalFilterValue,
     state: {
       sorting,
       columnFilters,
@@ -72,14 +73,13 @@ export function DataTable<TData, TValue>({
       rowSelection,
       globalFilter: globalFilterValue, // explicitly mapping
     },
-    onGlobalFilterChange: setGlobalFilterValue,
     globalFilterFn: (row, columnId, filterValue) => {
       // ✅ Access data from the row
       const name = row.original.name?.toString().toLowerCase() ?? "";
       const price = Number(row.original.price);
       const input = filterValue.toString().toLowerCase().trim();
 
-      // ✅ If input is empty — show all rows
+      // If input is empty — show all rows
       if (input === "") return true;
 
       if (input.startsWith(">=")) return price >= Number(input.slice(2));
@@ -137,15 +137,15 @@ export function DataTable<TData, TValue>({
                   নিচের চিহ্নগুলো ব্যবহার করে পণ্যগুলোর দাম অনুযায়ী খুঁজতে
                   পারেন:
                   <br />
-                  <strong>&gt;1000</strong> = 1000 এর চেয়ে বেশি দাম
+                  <strong>&gt;১০০০</strong> মানে ১০০০ টাকার বেশি পণ্য
                   <br />
-                  <strong>&lt;1000</strong> = 1000 এর চেয়ে কম দাম
+                  <strong>&lt;১০০০</strong> মানে ১০০০ টাকার কম পণ্য
                   <br />
-                  <strong>&gt;=1000</strong> = 1000 বা তার চেয়ে বেশি দাম
+                  <strong>&gt;=১০০০</strong> মানে ১০০০ টাকা বা তার বেশি পণ্য
                   <br />
-                  <strong>&lt;=1000</strong> = 1000 বা তার চেয়ে কম দাম
+                  <strong>&lt;=১০০০</strong> মানে ১০০০ টাকা বা তার কম পণ্য
                   <br />
-                  <strong>=1000</strong> = ঠিক 1000 দাম
+                  <strong>=১০০০</strong> মানে ঠিক ১০০০ টাকার পণ্য
                   <br />
                   <br />
                   অথবা পণ্যের নাম লিখে নাম অনুযায়ী খুঁজতে পারেন।
@@ -352,6 +352,16 @@ export function DataTable<TData, TValue>({
       <br />
       <strong>&lt;=1000</strong> - price less or equal to 1000
       <br />
+
+      <strong>&gt;1000</strong> = 1000 এর চেয়ে বেশি দাম
+        <br />
+        <strong>&lt;1000</strong> = 1000 এর চেয়ে কম দাম
+        <br />
+        <strong>&gt;=1000</strong> = 1000 বা তার চেয়ে বেশি দাম
+        <br />
+        <strong>&lt;=1000</strong> = 1000 বা তার চেয়ে কম দাম
+        <br />
+        <strong>=1000</strong> = ঠিক 1000 দাম
 
       // Operator tooltip
       <strong>=1000</strong> - price exactly 1000

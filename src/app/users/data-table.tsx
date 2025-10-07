@@ -87,7 +87,7 @@ export function DataTable<TData, TValue>({
         status.startsWith(search)
 
         // string.startsWith(substring, position)
-        //status === search exact match for status
+        //status === search => exact match for status
       );
     },
   });
