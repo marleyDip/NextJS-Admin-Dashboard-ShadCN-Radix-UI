@@ -68,12 +68,12 @@ const AddUser = () => {
       <SheetHeader>
         <SheetTitle className="mb-4">Add User</SheetTitle>
 
-        <ScrollArea className="h-[90vh] pb-2 pl-2">
+        <ScrollArea className="h-[90vh] pr-6">
           <SheetDescription asChild>
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8 pr-6"
+                className="space-y-8 pb-2 pl-2"
               >
                 {/* Full Name */}
                 <FormField

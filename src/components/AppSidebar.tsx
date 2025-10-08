@@ -48,10 +48,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import Link from "next/link";
 import Image from "next/image";
 
-import EditUser from "./EditUser";
 import AddOrder from "./AddOrder";
 import AddUser from "./AddUser";
 import AddCategory from "./AddCategory";
+import AddProduct from "./AddProduct";
 
 const items = [
   {
@@ -176,7 +176,7 @@ const AppSidebar = () => {
                     </SidebarMenuButton>
                   </SheetTrigger>
 
-                  <EditUser />
+                  <AddProduct />
                 </Sheet>
               </SidebarMenuItem>
               {/* Add Product */}

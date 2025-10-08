@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import { Card } from "./ui/card";
@@ -11,142 +11,170 @@ import { format } from "date-fns";
 import { Calendar } from "./ui/calendar";
 
 const TodoList = () => {
-    const [date, setDate] = useState<Date | undefined>(new Date());
-    const [open, setOpen] = useState(false);
+  const [date, setDate] = useState<Date | undefined>(new Date());
+  const [open, setOpen] = useState(false);
 
-    return (
-        <div className="">
-            <h1 className="text-lg font-medium mb-6">Todo List</h1>
-            <Popover open={open} onOpenChange={setOpen}>
+  return (
+    <div className="">
+      <h1 className="text-lg font-medium mb-6">Todo List</h1>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button className="w-full">
+            <CalendarIcon />
+            {date ? format(date, "PPP") : <span>Pick a Date</span>}
+          </Button>
+        </PopoverTrigger>
 
-                <PopoverTrigger asChild>
-                    <Button className="w-full">
-                        <CalendarIcon />
-                        {date ? format(date, "PPP") : <span>Pick a Date</span>}
-                    </Button>
-                </PopoverTrigger>
+        <PopoverContent className="p-0 w-auto">
+          <Calendar
+            mode="single"
+            selected={date}
+            onSelect={(date) => {
+              setDate(date);
+              setOpen(false);
+            }}
+            className="rounded-lg border"
+          />
+        </PopoverContent>
+      </Popover>
 
-                <PopoverContent className="p-0 w-auto">
-                    <Calendar
-                        mode="single"
-                        selected={date}
-                        onSelect={(date) => {
-                            setDate(date);
-                            setOpen(false)
-                        }}
-                        className="rounded-lg border"
-                    />
-                </PopoverContent>
-            </Popover>
+      {/* List */}
+      <ScrollArea className="h-[400px] mt-4">
+        <div className="flex flex-col space-y-4 p-4">
+          {/* list Item */}
+          <Card className="p-4">
+            <div className="flex items-center gap-4">
+              <Checkbox id="item1" checked />
+              <label
+                htmlFor="item1"
+                className="text-sm font-medium text-muted-foreground"
+              >
+                Are you want subscribe it?
+              </label>
+            </div>
+          </Card>
 
-            {/* List */}
-            <ScrollArea className="h-[400px] mt-4">
-                <div className="flex flex-col space-y-4 p-4">
-                    {/* list Item */}
-                    <Card className="p-4">
-                        <div className="flex items-center gap-4">
-                            <Checkbox id="item1" checked />
-                            <label htmlFor="item1" className="text-sm font-medium text-muted-foreground">
-                                Are you want subscribe it?
-                            </label>
-                        </div>
-                    </Card>
+          {/* list Item */}
+          <Card className="p-4">
+            <div className="flex items-center gap-4">
+              <Checkbox id="item1" checked />
+              <label
+                htmlFor="item1"
+                className="text-sm font-medium text-muted-foreground"
+              >
+                Are you want subscribe it?
+              </label>
+            </div>
+          </Card>
 
-                    {/* list Item */}
-                    <Card className="p-4">
-                        <div className="flex items-center gap-4">
-                            <Checkbox id="item1" checked />
-                            <label htmlFor="item1" className="text-sm font-medium text-muted-foreground">
-                                Are you want subscribe it?
-                            </label>
-                        </div>
-                    </Card>
+          {/* list Item */}
+          <Card className="p-4">
+            <div className="flex items-center gap-4">
+              <Checkbox id="item1" />
+              <label
+                htmlFor="item1"
+                className="text-sm font-medium text-muted-foreground"
+              >
+                Are you want subscribe it?
+              </label>
+            </div>
+          </Card>
 
-                    {/* list Item */}
-                    <Card className="p-4">
-                        <div className="flex items-center gap-4">
-                            <Checkbox id="item1" />
-                            <label htmlFor="item1" className="text-sm font-medium text-muted-foreground">
-                                Are you want subscribe it?
-                            </label>
-                        </div>
-                    </Card>
+          {/* list Item */}
+          <Card className="p-4">
+            <div className="flex items-center gap-4">
+              <Checkbox id="item1" />
+              <label
+                htmlFor="item1"
+                className="text-sm font-medium text-muted-foreground"
+              >
+                Are you want subscribe it?
+              </label>
+            </div>
+          </Card>
 
-                    {/* list Item */}
-                    <Card className="p-4">
-                        <div className="flex items-center gap-4">
-                            <Checkbox id="item1" />
-                            <label htmlFor="item1" className="text-sm font-medium text-muted-foreground">
-                                Are you want subscribe it?
-                            </label>
-                        </div>
-                    </Card>
+          {/* list Item */}
+          <Card className="p-4">
+            <div className="flex items-center gap-4">
+              <Checkbox id="item1" checked />
+              <label
+                htmlFor="item1"
+                className="text-sm font-medium text-muted-foreground"
+              >
+                Are you want subscribe it?
+              </label>
+            </div>
+          </Card>
 
+          {/* list Item */}
+          <Card className="p-4">
+            <div className="flex items-center gap-4">
+              <Checkbox id="item1" checked />
+              <label
+                htmlFor="item1"
+                className="text-sm font-medium text-muted-foreground"
+              >
+                Are you want subscribe it?
+              </label>
+            </div>
+          </Card>
 
-                    {/* list Item */}
-                    <Card className="p-4">
-                        <div className="flex items-center gap-4">
-                            <Checkbox id="item1" checked />
-                            <label htmlFor="item1" className="text-sm font-medium text-muted-foreground">
-                                Are you want subscribe it?
-                            </label>
-                        </div>
-                    </Card>
+          {/* list Item */}
+          <Card className="p-4">
+            <div className="flex items-center gap-4">
+              <Checkbox id="item1" />
+              <label
+                htmlFor="item1"
+                className="text-sm font-medium text-muted-foreground"
+              >
+                Are you want subscribe it?
+              </label>
+            </div>
+          </Card>
 
-                    {/* list Item */}
-                    <Card className="p-4">
-                        <div className="flex items-center gap-4">
-                            <Checkbox id="item1" checked />
-                            <label htmlFor="item1" className="text-sm font-medium text-muted-foreground">
-                                Are you want subscribe it?
-                            </label>
-                        </div>
-                    </Card>
+          {/* list Item */}
+          <Card className="p-4">
+            <div className="flex items-center gap-4">
+              <Checkbox id="item1" />
+              <label
+                htmlFor="item1"
+                className="text-sm font-medium text-muted-foreground"
+              >
+                Are you want subscribe it?
+              </label>
+            </div>
+          </Card>
 
-                    {/* list Item */}
-                    <Card className="p-4">
-                        <div className="flex items-center gap-4">
-                            <Checkbox id="item1" />
-                            <label htmlFor="item1" className="text-sm font-medium text-muted-foreground">
-                                Are you want subscribe it?
-                            </label>
-                        </div>
-                    </Card>
+          {/* list Item */}
+          <Card className="p-4">
+            <div className="flex items-center gap-4">
+              <Checkbox id="item1" checked />
+              <label
+                htmlFor="item1"
+                className="text-sm font-medium text-muted-foreground"
+              >
+                Are you want subscribe it?
+              </label>
+            </div>
+          </Card>
 
-                    {/* list Item */}
-                    <Card className="p-4">
-                        <div className="flex items-center gap-4">
-                            <Checkbox id="item1" />
-                            <label htmlFor="item1" className="text-sm font-medium text-muted-foreground">
-                                Are you want subscribe it?
-                            </label>
-                        </div>
-                    </Card>
-
-                    {/* list Item */}
-                    <Card className="p-4">
-                        <div className="flex items-center gap-4">
-                            <Checkbox id="item1" checked />
-                            <label htmlFor="item1" className="text-sm font-medium text-muted-foreground">
-                                Are you want subscribe it?
-                            </label>
-                        </div>
-                    </Card>
-
-                    {/* list Item */}
-                    <Card className="p-4">
-                        <div className="flex items-center gap-4">
-                            <Checkbox id="item1" />
-                            <label htmlFor="item1" className="text-sm font-medium text-muted-foreground">
-                                Are you want subscribe it?
-                            </label>
-                        </div>
-                    </Card>
-                </div>
-            </ScrollArea>
+          {/* list Item */}
+          <Card className="p-4">
+            <div className="flex items-center gap-4">
+              <Checkbox id="item1" />
+              <label
+                htmlFor="item1"
+                className="text-sm font-medium text-muted-foreground"
+              >
+                Are you want subscribe it?
+              </label>
+            </div>
+          </Card>
         </div>
-    )
-}
+      </ScrollArea>
+    </div>
+  );
+};
 
 export default TodoList;
 
