@@ -231,7 +231,7 @@ export function DataTable<TData, TValue>({
 
     const timer = setTimeout(handleTyping, typingSpeed);
     return () => clearTimeout(timer);
-  }, [placeholder, isDeleting, textIndex, texts]);
+  }, [placeholder, isDeleting, textIndex, texts, desktopTexts, mobileTexts]);
 
   return (
     <div className="rounded-md border">

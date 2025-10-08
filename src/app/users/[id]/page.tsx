@@ -133,8 +133,8 @@ const SingleUsersPage = () => {
             </div>
 
             <p className="text-sm font-medium text-muted-foreground text-justify">
-              I&apos;m Md. Sofian Hasan, a passionate software engineer focused
-              on full-stack web development. Skilled in PHP, MySQL, JavaScript,
+              I am Md. Sofian Hasan, a passionate software engineer focused on
+              full-stack web development. Skilled in PHP, MySQL, JavaScript,
               React, Next.js, Node.js, and Tailwind CSS, I enjoy building
               scalable and user-friendly applications.
             </p>
