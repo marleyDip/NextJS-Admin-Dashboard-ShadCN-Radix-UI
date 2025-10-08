@@ -17,10 +17,6 @@ import {
 } from "./ui/form";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { Textarea } from "./ui/textarea";
 import {
   Select,
@@ -31,6 +27,10 @@ import {
 } from "./ui/select";
 import { Checkbox } from "./ui/checkbox";
 import { ScrollArea } from "./ui/scroll-area";
+
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
 const categories = [
   "T-shirts",
@@ -162,8 +162,8 @@ const AddProduct = () => {
       <SheetHeader>
         <SheetTitle className="mb-4">Add Product</SheetTitle>
 
-        <SheetDescription asChild>
-          <ScrollArea className="h-[90vh] pr-6">
+        <ScrollArea className="h-[90vh] pr-6">
+          <SheetDescription asChild>
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
@@ -184,6 +184,7 @@ const AddProduct = () => {
                       <FormDescription>
                         Enter the name of the product.
                       </FormDescription>
+
                       <FormMessage />
                     </FormItem>
                   )}
@@ -205,6 +206,7 @@ const AddProduct = () => {
                       <FormDescription>
                         Enter the short description of the product.
                       </FormDescription>
+
                       <FormMessage />
                     </FormItem>
                   )}
@@ -226,6 +228,7 @@ const AddProduct = () => {
                       <FormDescription>
                         Enter the description of the product.
                       </FormDescription>
+
                       <FormMessage />
                     </FormItem>
                   )}
@@ -247,6 +250,7 @@ const AddProduct = () => {
                       <FormDescription>
                         Enter the price of the product.
                       </FormDescription>
+
                       <FormMessage />
                     </FormItem>
                   )}
@@ -280,6 +284,7 @@ const AddProduct = () => {
                       <FormDescription>
                         Enter the category of the product.
                       </FormDescription>
+
                       <FormMessage />
                     </FormItem>
                   )}
@@ -331,13 +336,14 @@ const AddProduct = () => {
                       <FormDescription>
                         Enter the available sizes of the product.
                       </FormDescription>
+
                       <FormMessage />
                     </FormItem>
                   )}
                 />
                 {/* Sizes */}
 
-                {/* Colors */}
+                {/* Colors & Images */}
                 <FormField
                   control={form.control}
                   name="colors"
@@ -346,38 +352,85 @@ const AddProduct = () => {
                       <FormLabel>Colors</FormLabel>
 
                       <FormControl>
-                        <Input {...field} />
+                        <div className="space-y-4">
+                          {/* Color checkboxes */}
+                          <div className="grid grid-cols-3 gap-4 my-2">
+                            {colors.map((color) => (
+                              <div
+                                className="flex items-center gap-2"
+                                key={color}
+                              >
+                                <Checkbox
+                                  id="color"
+                                  checked={field.value?.includes(color)}
+                                  onCheckedChange={(checked) => {
+                                    const currentValues = field.value || [];
+
+                                    const updated = checked
+                                      ? [...currentValues, color]
+                                      : currentValues.filter(
+                                          (v) => v !== color
+                                        );
+
+                                    field.onChange(updated);
+                                  }}
+                                />
+
+                                <label
+                                  htmlFor="color"
+                                  className="text-xs flex items-center gap-2"
+                                >
+                                  <div
+                                    className="w-2.5 h-2.5 rounded-full"
+                                    style={{ backgroundColor: color }}
+                                  />
+                                  {color.toUpperCase()}
+                                </label>
+                              </div>
+                            ))}
+                          </div>
+                          {/* Color checkboxes */}
+
+                          {/* Form Description */}
+                          <FormDescription>
+                            Enter the available colors of the product.
+                          </FormDescription>
+                          {/* Form Description */}
+
+                          {/* Image upload section */}
+                          {field.value && field.value.length > 0 && (
+                            <div className="mt-8 space-y-4">
+                              <p className="text-sm font-medium">
+                                Upload images for selected colors:
+                              </p>
+                              {field.value.map((color) => (
+                                <div
+                                  className="flex items-center gap-2"
+                                  key={color}
+                                >
+                                  <div
+                                    className="w-2.5 h-2.5 rounded-full"
+                                    style={{ backgroundColor: color }}
+                                  />
+
+                                  <span className="text-sm min-w-15">
+                                    {color.toUpperCase()}
+                                  </span>
+
+                                  <Input type="file" accept="image/*" />
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                          {/* Image upload section */}
+                        </div>
                       </FormControl>
 
-                      <FormDescription>
-                        Enter the colors of the product.
-                      </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                {/* Colors */}
-
-                {/* Images */}
-                {/* <FormField
-                control={form.control}
-                name="images"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>images</FormLabel>
-
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-
-                    <FormDescription>
-                      Enter the images of the product.
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              /> */}
-                {/* Images */}
+                {/* Colors & Images */}
 
                 <Button
                   className="hover:translate-x-1 duration-200"
@@ -387,8 +440,8 @@ const AddProduct = () => {
                 </Button>
               </form>
             </Form>
-          </ScrollArea>
-        </SheetDescription>
+          </SheetDescription>
+        </ScrollArea>
       </SheetHeader>
     </SheetContent>
   );
@@ -435,4 +488,120 @@ export default AddProduct;
 /* In web design, 1vh stands for one-hundredth (1%) of the viewport's height.
     = The viewport is the visible area of the browser window where your website content is displayed.
     = Therefore, 1vh is a relative unit of measurement, with 100vh representing the full height of the browser window.
+*/
+
+/* <FormField
+                  control={form.control}
+                  name="colors"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Colors</FormLabel>
+
+                      <FormControl>
+                        <div className="space-y-4">
+                          <div className="grid grid-cols-3 gap-4 my-2">
+                            {colors.map((color) => (
+                              <div
+                                className="flex items-center gap-2"
+                                key={color}
+                              >
+                                <Checkbox
+                                  id={color}
+                                  checked={field.value?.includes(color)}
+                                  onCheckedChange={(checked) => {
+                                    const currentValues = field.value || [];
+
+                                    const updated = checked
+                                      ? [...currentValues, color]
+                                      : currentValues.filter(
+                                          (v) => v !== color
+                                        );
+
+                                    field.onChange(updated);
+                                  }}
+                                />
+
+                                <label
+                                  htmlFor={color}
+                                  className="text-xs flex items-center gap-2"
+                                >
+                                  <div
+                                    className="w-2.5 h-2.5 rounded-full"
+                                    style={{ backgroundColor: color }}
+                                  />
+                                  {color.toUpperCase()}
+                                </label>
+                              </div>
+                            ))}
+                          </div>
+
+                          <FormDescription>
+                            Enter the available colors of the product.
+                          </FormDescription>
+
+                          {field.value && field.value.length > 0 && (
+                            <div className="mt-8 space-y-4">
+                              <p className="text-sm font-medium">
+                                Upload images for selected colors:
+                              </p>
+
+                              {field.value.map((color) => (
+                                <div
+                                  key={color}
+                                  className="flex items-center gap-3 rounded-lg border p-3 shadow-sm"
+                                >
+                                  <div
+                                    className="w-3 h-3 rounded-full"
+                                    style={{ backgroundColor: color }}
+                                  />
+                                  <span className="text-sm w-16">
+                                    {color.toUpperCase()}
+                                  </span>
+
+                                  <div className="relative flex-1">
+                                    <input
+                                      id={`file-${color}`}
+                                      type="file"
+                                      accept="image/*"
+                                      className="absolute inset-0 opacity-0 cursor-pointer z-10"
+                                      onChange={(e) => {
+                                        const file = e.target.files?.[0];
+                                        if (file) {
+                                          console.log(
+                                            `File for ${color}:`,
+                                            file.name
+                                          );
+                                          // ✅ store file name directly in a temporary state
+                                          const updatedFiles = {
+                                            ...(files || {}),
+                                          };
+                                          updatedFiles[color] = file;
+                                          setFiles(updatedFiles);
+                                        }
+                                      }}
+                                    />
+
+                                    <Button
+                                      type="button"
+                                      variant="secondary"
+                                      className="w-full justify-start hover:translate-x-2 transition-transform duration-200"
+                                    >
+                                      <span className="truncate text-sm text-muted-foreground">
+                                        {files?.[color]?.name
+                                          ? files[color].name
+                                          : `Choose image for ${color}`}
+                                      </span>
+                                    </Button>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 */
