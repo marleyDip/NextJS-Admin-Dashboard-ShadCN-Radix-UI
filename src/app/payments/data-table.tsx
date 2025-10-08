@@ -110,6 +110,7 @@ export function DataTable<TData, TValue>({
         //const [statusPart, valuePart] = ["failed", "120"];
         //console.log(statusPart); // "failed"
         //console.log(valuePart); // "120"
+
         // string.split(separator, limit)
 
         // Destructure Assignment
@@ -132,6 +133,9 @@ export function DataTable<TData, TValue>({
           "=": amount === val,
         };
 
+        // arr.includes(valueToFind, fromIndex)
+        //valueToFind (Required) => The value to search for within the array.
+        // fromIndex (Optional) => default 0, The index at which to start the search
         // case: 1 statusPart is valid status => status + amount filter
         if (
           validStatus.includes(statusPart as Payment["status"]) &&
