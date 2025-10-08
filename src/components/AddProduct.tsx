@@ -81,70 +81,68 @@ const sizes = [
 ] as const;
 
 //Define Zod schema
-// const formSchema = z.object({
-//   name: z.string().min(1, { message: "Product name is required!" }),
-
-//   shortDescription: z
-//     .string()
-//     .min(1, { message: "Short description is required!" }),
-
-//   description: z.string().min(1, { message: "Description is required!" }),
-
-//   price: z.number().min(1, { message: "Price is required!" }),
-
-//   category: z.enum(categories),
-
-//   sizes: z.array(z.enum(sizes)),
-
-//   colors: z.array(z.enum(colors)),
-
-//   images: z.record(z.enum(colors), z.string()),
-// });
-
 const formSchema = z.object({
-  name: z
-    .string()
-    .min(1, { message: "Product name is required!" })
-    .max(100, { message: "Product name must be under 100 characters." }),
+  name: z.string().min(1, { message: "Product name is required!" }),
 
   shortDescription: z
     .string()
-    .min(1, { message: "Short description is required!" })
-    .max(200, { message: "Short description must be under 200 characters." }),
+    .min(1, { message: "Short description is required!" }),
 
-  description: z
-    .string()
-    .min(1, { message: "Description is required!" })
-    .max(1000, { message: "Description must be under 1000 characters." }),
+  description: z.string().min(1, { message: "Description is required!" }),
 
-  // Coerce input to number safely
-  price: z
-    .number()
-    .min(1, { message: "Price must be at least 1." })
-    .max(1000000, { message: "Price too high — please check again." }),
+  price: z.number().min(1, { message: "Price is required!" }),
 
   category: z.enum(categories),
 
-  // Enforce valid category from list
-  // category: z.enum(categories, {
-  //   required_error: "Please select a category.",
-  // }),
+  sizes: z.array(z.enum(sizes)),
 
-  // Require at least one size
-  sizes: z
-    .array(z.enum(sizes))
-    .min(1, { message: "Select at least one available size." }),
+  colors: z.array(z.enum(colors)),
 
-  // Require at least one color
-  colors: z
-    .array(z.enum(colors))
-    .min(1, { message: "Select at least one color." }),
-
-  // Each color key maps to a valid image URL (optional but validated)
-  images: z
-    .record(z.enum(colors), z.string().url("Invalid image URL."))
-    .optional(),
+  images: z.record(z.enum(colors), z.string()),
 });
+
+// const formSchema = z.object({
+//   name: z
+//     .string()
+//     .min(1, { message: "Product name is required!" })
+//     .max(100, { message: "Product name must be under 100 characters." }),
+
+//   shortDescription: z
+//     .string()
+//     .min(1, { message: "Short description is required!" })
+//     .max(200, { message: "Short description must be under 200 characters." }),
+
+//   description: z
+//     .string()
+//     .min(1, { message: "Description is required!" })
+//     .max(1000, { message: "Description must be under 1000 characters." }),
+
+//   // Coerce input to number safely
+//   price: z
+//     .number()
+//     .min(1, { message: "Price must be at least 1." })
+//     .max(1000000, { message: "Price too high — please check again." }),
+
+//   //Enforce valid category from list
+//   category: z.enum(categories, {
+//     required_error: "Please select a category.",
+//   }),
+
+//   // Require at least one size
+//   sizes: z
+//     .array(z.enum(sizes))
+//     .min(1, { message: "Select at least one available size." }),
+
+//   // Require at least one color
+//   colors: z
+//     .array(z.enum(colors))
+//     .min(1, { message: "Select at least one color." }),
+
+//   // Each color key maps to a valid image URL (optional but validated)
+//   images: z
+//     .record(z.enum(colors), z.string().url("Invalid image URL."))
+//     .optional(),
+// });
 
 const AddProduct = () => {
   // 1. Define form. Initialize React Hook Form with Zod. useForm with validation ONLY on submit

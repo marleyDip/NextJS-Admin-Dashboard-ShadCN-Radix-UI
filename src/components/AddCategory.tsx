@@ -47,7 +47,10 @@ const AddCategory = () => {
 
         <SheetDescription asChild>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-8 pl-2"
+            >
               {/* Name */}
               <FormField
                 control={form.control}

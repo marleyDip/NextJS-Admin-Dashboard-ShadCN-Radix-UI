@@ -51,7 +51,7 @@ const AddOrder = () => {
 
         <SheetDescription asChild>
           <Form {...form}>
-            <form className="space-y-8">
+            <form className="space-y-8 pl-2">
               {/* Amount */}
               <FormField
                 control={form.control}
