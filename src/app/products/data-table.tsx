@@ -38,16 +38,14 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Product } from "./columns";
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+interface DataTableProps<TValue> {
+  columns: ColumnDef<Product, TValue>[];
+  data: Product[];
 }
 
-export function DataTable<TData, TValue>({
-  columns,
-  data,
-}: DataTableProps<TData, TValue>) {
+export function DataTable<TValue>({ columns, data }: DataTableProps<TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -74,9 +72,11 @@ export function DataTable<TData, TValue>({
       globalFilter: globalFilterValue, // explicitly mapping
     },
     globalFilterFn: (row, columnId, filterValue) => {
-      // ✅ Access data from the row
-      const name = row.original.name?.toString().toLowerCase() ?? "";
-      const price = Number(row.original.price);
+      const product = row.original as Product;
+
+      const name = product.name?.toString().toLowerCase() ?? "";
+      const price = Number(product.price);
+
       const input = filterValue.toString().toLowerCase().trim();
 
       // If input is empty — show all rows
