@@ -1,6 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Info, Trash2 } from "lucide-react";
+
+import { useEffect, useMemo, useState } from "react";
+import { Payment } from "./columns";
 
 import {
   ColumnDef,
@@ -32,23 +35,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { Info, Trash2 } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Payment } from "./columns";
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+interface DataTableProps<TValue> {
+  columns: ColumnDef<Payment, TValue>[];
+  data: Payment[];
 }
 
-export function DataTable<TData, TValue>({
-  columns,
-  data,
-}: DataTableProps<TData, TValue>) {
+export function DataTable<TValue>({ columns, data }: DataTableProps<TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -75,13 +73,12 @@ export function DataTable<TData, TValue>({
       globalFilter,
     },
     globalFilterFn: (row, columnId, filterValue) => {
-      const name =
-        row.original.fullName?.toString().toLowerCase().trim() ??
-        row.original.fullname?.toString().toLowerCase().trim() ??
-        "";
-      const email = row.original.email?.toString().toLowerCase().trim() ?? "";
-      const status = row.original.status?.toString().toLowerCase().trim() ?? "";
-      const amount = Number(row.original.amount);
+      const payment = row.original as Payment;
+
+      const name = payment.fullName?.toString().toLowerCase().trim() ?? "";
+      const email = payment.email?.toString().toLowerCase().trim() ?? "";
+      const status = payment.status?.toString().toLowerCase().trim() ?? "";
+      const amount = Number(payment.amount);
 
       const inputRaw = filterValue?.toString().toLowerCase().trim();
 
@@ -97,21 +94,8 @@ export function DataTable<TData, TValue>({
         | undefined;
 
       if (operator) {
-        // split input into parts using the operator
-        // const parts = inputRaw
-        //   .split(operator)
-        //   .map((part: string) => part.trim());
-        // const statusPart = parts[0];
-        // const valuePart = parts[1];
-
         //const inputRaw = "failed>=120";
         //inputRaw.split(">="); // ["failed", "120"]
-        //.map(x => x.trim()) Trims whitespace from each part.
-        //const [statusPart, valuePart] = ["failed", "120"];
-        //console.log(statusPart); // "failed"
-        //console.log(valuePart); // "120"
-
-        // string.split(separator, limit)
 
         // Destructure Assignment
         const [statusPart, valuePart] = inputRaw
@@ -125,6 +109,7 @@ export function DataTable<TData, TValue>({
           "success",
           "failed",
         ];
+
         const compare: Record<Operator, boolean> = {
           ">=": amount >= val,
           "<=": amount <= val,
@@ -133,15 +118,12 @@ export function DataTable<TData, TValue>({
           "=": amount === val,
         };
 
-        // arr.includes(valueToFind, fromIndex)
-        //valueToFind (Required) => The value to search for within the array.
-        // fromIndex (Optional) => default 0, The index at which to start the search
         // case: 1 statusPart is valid status => status + amount filter
         if (
           validStatus.includes(statusPart as Payment["status"]) &&
           !isNaN(val)
         ) {
-          return status === statusPart && compare[operator];
+          return status === statusPart.toLowerCase() && compare[operator];
         }
 
         // case: 2 valuePart is numeric => amount only
@@ -168,22 +150,28 @@ export function DataTable<TData, TValue>({
   //console.log(rowSelection);
 
   // Placeholder texts to rotate
-  const desktopTexts = [
-    "failed>=100 for filter by status & amount together",
-    "Type <=100, >=100, or =100 to filter by price",
-    "Filter by Name...",
-    "Search by Email...",
-    "Find by Status (type partial words like 'pen' for pending, 'succ' for success)",
-  ];
+  const desktopTexts = useMemo(
+    () => [
+      "failed>=100 for filter by status & amount together",
+      "Type <=100, >=100, or =100 to filter by price",
+      "Filter by Name...",
+      "Search by Email...",
+      "Find by Status (type partial words like 'pen' for pending, 'succ' for success)",
+    ],
+    []
+  );
 
   // Shorter cycle for mobile
-  const mobileTexts = [
-    "failed>=100",
-    "<=100 or >=100,",
-    "Filter by Name...",
-    "Search by Email...",
-    "type pen, succ, fail",
-  ];
+  const mobileTexts = useMemo(
+    () => [
+      "failed>=100",
+      "<=100 or >=100,",
+      "Filter by Name...",
+      "Search by Email...",
+      "type pen, succ, fail",
+    ],
+    []
+  );
 
   const [texts, setTexts] = useState<string[]>(desktopTexts);
   const [placeholder, setPlaceholder] = useState("");
@@ -204,7 +192,7 @@ export function DataTable<TData, TValue>({
     handleResize(); // run on mount
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [desktopTexts, mobileTexts]);
 
   // Typing animation
   useEffect(() => {
@@ -231,7 +219,7 @@ export function DataTable<TData, TValue>({
 
     const timer = setTimeout(handleTyping, typingSpeed);
     return () => clearTimeout(timer);
-  }, [placeholder, isDeleting, textIndex, texts, desktopTexts, mobileTexts]);
+  }, [placeholder, isDeleting, textIndex, texts]);
 
   return (
     <div className="rounded-md border">
@@ -392,6 +380,114 @@ export function DataTable<TData, TValue>({
   );
 }
 
+/*  globalFilterFn: (row, columnId, filterValue) => {
+      const name = row.original.fullName?.toString().toLowerCase().trim() ?? "";
+      const email = row.original.email?.toString().toLowerCase().trim() ?? "";
+      const status = row.original.status?.toString().toLowerCase().trim() ?? "";
+      const amount = Number(row.original.amount);
+
+      const inputRaw = filterValue?.toString().toLowerCase().trim();
+
+      // No search, show all
+      if (!inputRaw) return true;
+
+      // Define Operator
+      type Operator = ">=" | "<=" | ">" | "<" | "=";
+      const ops: Operator[] = [">=", "<=", ">", "<", "="];
+      // Detect which one exists
+      const operator = ops.find((op) => inputRaw.includes(op)) as
+        | Operator
+        | undefined;
+
+      if (operator) {
+        // split input into parts using the operator
+        // const parts = inputRaw
+        //   .split(operator)
+        //   .map((part: string) => part.trim());
+        // const statusPart = parts[0];
+        // const valuePart = parts[1];
+
+        //const inputRaw = "failed>=120";
+        //inputRaw.split(">="); // ["failed", "120"]
+        //.map(x => x.trim()) Trims whitespace from each part.
+        //const [statusPart, valuePart] = ["failed", "120"];
+        //console.log(statusPart); // "failed"
+        //console.log(valuePart); // "120"
+
+        // string.split(separator, limit)
+
+        // Destructure Assignment
+        const [statusPart, valuePart] = inputRaw
+          .split(operator)
+          .map((x: string) => x.trim());
+        const val = Number(valuePart);
+
+        const validStatus: Payment["status"][] = [
+          "pending",
+          "processing",
+          "success",
+          "failed",
+        ];
+        const compare: Record<Operator, boolean> = {
+          ">=": amount >= val,
+          "<=": amount <= val,
+          ">": amount > val,
+          "<": amount < val,
+          "=": amount === val,
+        };
+
+        // arr.includes(valueToFind, fromIndex)
+        //valueToFind (Required) => The value to search for within the array.
+        // fromIndex (Optional) => default 0, The index at which to start the search
+        // case: 1 statusPart is valid status => status + amount filter
+        if (
+          validStatus.includes(statusPart as Payment["status"]) &&
+          !isNaN(val)
+        ) {
+          return status === statusPart && compare[operator];
+        }
+
+        // case: 2 valuePart is numeric => amount only
+        if (!isNaN(val)) {
+          return compare[operator];
+        }
+      } else {
+        // case 3: if input is numeric only
+        const val = Number(inputRaw);
+        if (!isNaN(val)) {
+          return amount >= val;
+        }
+      }
+
+      // Fallback, normal text search (name, email, or status)
+      return (
+        name.includes(inputRaw) ||
+        email.includes(inputRaw) ||
+        status.startsWith(inputRaw)
+      );
+    },
+*/
+
+/* If you want to keep your generic TData, you can just cast inside the filter function:
+
+      globalFilterFn: (row, columnId, filterValue) => {
+        const payment = row.original as Payment;
+        const name =
+          payment.fullName?.toString().toLowerCase().trim() ?? "";
+        const email = payment.email?.toString().toLowerCase().trim() ?? "";
+        const status = payment.status?.toString().toLowerCase().trim() ?? "";
+        const amount = Number(payment.amount);
+        ...
+      }
+
+
+    ✅ Advantage:
+    Doesn’t require changing component typing.
+
+    ❌ Disadvantage:
+    You lose compile-time type safety (TypeScript won’t verify your data structure).
+*/
+
 /* isNaN() → checks if a value is Not a Number.
 It returns:
       = true → when the value is not a valid number
@@ -416,7 +512,10 @@ It returns:
 /* Price filter = switch Conditional Statement, String Methods => charAt(), startsWith() Array & String Methods = slice()
 
     globalFilterFn: (row, columnId, filterValue) => {
-      const name = row.original.fullName?.toString().toLowerCase().trim() ?? "";
+      const name =
+        row.original.fullName?.toString().toLowerCase().trim() ??
+        row.original.fullname?.toString().toLowerCase().trim() ??
+        "";
       const email = row.original.email?.toString().toLowerCase().trim() ?? "";
       const status = row.original.status?.toString().toLowerCase().trim() ?? "";
       const amount = Number(row.original.amount);
