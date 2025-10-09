@@ -33,16 +33,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
+import { User } from "./columns";
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+interface DataTableProps<TValue> {
+  columns: ColumnDef<User, TValue>[];
+  data: User[];
 }
 
-export function DataTable<TData, TValue>({
-  columns,
-  data,
-}: DataTableProps<TData, TValue>) {
+export function DataTable<TValue>({ columns, data }: DataTableProps<TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -70,14 +68,15 @@ export function DataTable<TData, TValue>({
     },
     //globalFilterFn: (row, _, filterValue) => {
     globalFilterFn: (row, columnId, filterValue) => {
+      const user = row.original as User;
+
+      const name = user.fullName?.toLowerCase().trim() ?? "";
+      const email = user.email?.toLowerCase().trim() ?? "";
+      const status = user.status?.toString().toLowerCase().trim() ?? "";
+
       const search = filterValue?.toString().toLowerCase().trim();
 
-      const name = row.original.fullName?.toLowerCase().trim() ?? "";
-      const email = row.original.email?.toLowerCase().trim() ?? "";
-      const status = row.original.status?.toString().toLowerCase().trim() ?? "";
-
       //console.log("status:", row.original.status, "search:", search);
-
       //console.log(`"${status}" === "${search}"`, status.includes(search));
 
       // OR logic
